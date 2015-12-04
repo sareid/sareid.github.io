@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Flatiron&nbsp;school | I'm like Captain Planet, only with a keyboard]]></title>
+  <link href="http://sareid.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
+  <link href="http://sareid.github.io/"/>
+  <updated>2015-12-04T15:06:07-05:00</updated>
+  <id>http://sareid.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[My First Post on the Blog]]></title>
+    <link href="http://sareid.github.io/blog/2015/12/04/my-first-post-on-the-blog/"/>
+    <updated>2015-12-04T15:04:05-05:00</updated>
+    <id>http://sareid.github.io/blog/2015/12/04/my-first-post-on-the-blog</id>
+    <content type="html"><![CDATA[<p>&ldquo;Hello World!&rdquo;</p>
+]]></content>
+  </entry>
+  
+</feed>
