@@ -3,11 +3,11 @@
 # ----------------------- #
 
 url: http://sareid.github.io
-title: Andrew.fumbles
+title: andrew does his best
 subtitle: A lost environmentalist learns to code
 author: Adnrew Reid
 simple_search: https://www.google.com/search
-description: Blogging my experiences in the Flatiron School Web Development Immersive program with an eye towards environmental applications.
+description: I'm Andrew Reid, a wandering Canadian who has spent the past decade abroad. After working in environmental research for 8 years, I decided to change careers, and I'm now studying web development at the Flatiron School in New York. This blog is that journey.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -64,13 +64,13 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: sareid
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user:
+twitter_user: sareidboom
 twitter_tweet_button: true
 
 # Google +1
