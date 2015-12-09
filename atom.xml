@@ -4,7 +4,7 @@
   <title><![CDATA[andrew does his best]]></title>
   <link href="http://sareid.github.io/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2015-12-09T15:22:04-05:00</updated>
+  <updated>2015-12-09T15:24:50-05:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Adnrew Reid]]></name>
@@ -24,6 +24,15 @@ quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My First Post on the Blog]]></title>
+    <link href="http://sareid.github.io/blog/2015/12/04/my-first-post-on-the-blog/"/>
+    <updated>2015-12-04T15:04:05-05:00</updated>
+    <id>http://sareid.github.io/blog/2015/12/04/my-first-post-on-the-blog</id>
+    <content type="html"><![CDATA[<p>&ldquo;Hello World!&rdquo; <!--more--></p>
 ]]></content>
   </entry>
   
