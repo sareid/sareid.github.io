@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2015-12-07T12:59:46-05:00</updated>
+  <updated>2015-12-09T15:20:11-05:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Adnrew Reid]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[My First Week at Flatiron]]></title>
+    <link href="http://sareid.github.io/blog/2015/12/09/my-first-week-at-flatiron/"/>
+    <updated>2015-12-09T15:09:15-05:00</updated>
+    <id>http://sareid.github.io/blog/2015/12/09/my-first-week-at-flatiron</id>
+    <content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<!--more-->
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[My First Post on the Blog]]></title>
