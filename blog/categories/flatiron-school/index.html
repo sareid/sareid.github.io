@@ -57,6 +57,118 @@
         <div class="row">
           <div class="col-md-offset-3 col-md-6">
             <article>
+  <h2><a href="/blog/2015/12/18/pstore-and-me-an-uneasy-alliance/">PSTORE and Me: An Uneasy Alliance</a></h2>
+  
+  <p>
+    <h3>In the beginning&hellip;</h3>
+
+<p>Earlier in the week, when working on a <a href="https://github.com/sareid/cli-project-week-guidelines-web-1115">little NBA player stats CLI program</a>, I had my first run in with Ruby&rsquo;s <a href="http://ruby-doc.org/stdlib-2.1.2/libdoc/pstore/rdoc/PStore.html">PSTORE class</a> - a mechanism that allows you store Ruby objects that persist between instances of the program running. The program we were building let you build a team of ten basketball players, and we wanted a way for the program to remember your team the next time it started up.</p>
+
+<p>After some wrangling, I got PSTORE to work. The program could save an array of Ruby objects upon shutting down (in this case individual basketball players), and then return that same array upon the next startup. I felt great. I felt triumphant!</p>
+
+<p>&hellip;but I got it to work in the same way that primitive man got fire to &lsquo;work&rsquo;.</p>
+
+<p><img src="http://i.imgur.com/SPFScT0.jpg" alt="Primitive man's experience with PSTORE" /></p>
+
+<p>Sure, those hirsute cave dwellers weren&rsquo;t freezing to death, but they also weren&rsquo;t bandying about high level concepts of thermodynamics. And so, like my primordial kin, I stared into the crackling PSTORE flames, my eyes wide with abject miscomprehension and distrust.</p>
+
+<p>I knew what needed to be done. I needed to wade into PSTORE, to cleanse myself in its waters and emerge a  more competent, capable web developer.</p>
+
+<h3>Cool. Wait. What is this PSTORE you speak of?</h3>
+
+<p>So, first thing&rsquo;s first. What exactly is PSTORE? I think if you were to ask a random person on the street, they might say:</p>
+
+<blockquote><p>PStore implements a file based persistence mechanism based on a Hash. User code can store hierarchies of Ruby objects (values) into the data store file by name (keys). An object hierarchy may be just a single object. User code may later read values back from the data store or even update data, as needed.</p></blockquote>
+
+<p>&hellip;if by &ldquo;random person on the street&rdquo; you meant &ldquo;the Ruby documentation.&rdquo; So what does it mean? It means you can <em>&lsquo;persist data&rsquo;</em> - using PSTORE you can save Ruby objects (in our case, an array of basketball players) to be accessed during a different through a Hash-like structure. Our array was stored as the value for a key called <code>:players</code>. This hash was saved to a .pstore file included in our project.</p>
+
+<h3>Getting started with PSTORE (or How I Learned to Stop Worrying and Love the Persistent Hash)</h3>
+
+<p>PSTORE is part of the standard library, so it can be used by incuding by simply requiring it. No need for pesky gems or ancient voodoo incantations! After that, you need to initialise a new PSTORE object, passing the desired path of the .pstore file as the argument.
+<code>ruby
+require 'pstore'
+saved_data = PSTORE.new("filepath.pstore")
+</code>
+The cool thing about this, is that PSTORE detects if the file already exists. If it does, it reads the data in the file and assigns it to the <code>saved_data</code> variable. If not, it creates a new file and assigns it. So, at this point, the value of <code>saved_data</code> is now a persistent hash. Neato.</p>
+
+<p>In our case, we did that as soon as the program first started, in the first method called by our program.
+Now, when you actually want to read or write to the .pstore file, you need to do within a &lsquo;transaction&rsquo;. Transactions are an instance method of the PSTORE class.</p>
+
+<h3>Transactions - Cha-Ching!</h3>
+
+<p>So, let&rsquo;s say we wanted to save to the .pstore file. How would we do this?</p>
+
+<pre><code class="ruby">saved_data.transaction do
+  saved_data[key_name] = [key_value]
+end
+</code></pre>
+
+<p>This code assigns a value, <code>key_value</code> to a key, <code>:key_name</code> in the PSTORE hash object. The value could be an number of different types of Ruby objects. In the case of our project, it was an array of basketball players.</p>
+
+<p>To read from the .pstore file, and assign its value to a variable that we can use in Ruby, we follow a similar strategy.</p>
+
+<pre><code class="ruby">some_variable = saved_data.transaction do
+  saved_data.fetch(:key_name, default)
+end
+</code></pre>
+
+<p>A number of things are happening here. Like the method of saving, we call the #transaction method on <code>saved_data</code>. We use the fetch method to retrieve the value of a particular key (<code>:key_name</code>). The <code>default</code> option is what we will return if no such key is present. Great!</p>
+
+<p>So why do we have to do this in a transaction? If you try with the transaction, Ruby returns an error. Well, from what I understand, this is to ensure that multiple processes don&rsquo;t access the same .pstore file at the same time, avoiding data being written in an incomplete or corrupted state.</p>
+
+<h3>Conclusion: PSTORE is rad and I also I don&rsquo;t fully understand it</h3>
+
+<p>My understanding of PSTORE is way more advanced than it was a few short days ago, but it&rsquo;s still not&hellip;great. There&rsquo;s something called &lsquo;commit&rsquo;, which seems to be a method of finalising the tasks being done in a transaction, but I haven&rsquo;t figured it all out yet. But I&rsquo;ll keep trying.</p>
+
+<p>I guess I&rsquo;m no longer a prehistoric human, staring at a fire and failing to understand what it is. I know what fire is. I think. I just don&rsquo;t know how it fully works. Or why it fully works. So, I guess in terms of of human history, I&rsquo;m somewhere in Ancient Greece.</p>
+
+<p>And that&rsquo;s not nothing.</p>
+
+<p><img src="http://i.imgur.com/RnGi4DZ.jpg" alt="The Ancient Greek's knowledge of fire is akin to my knowledge of PSTORE now." /></p>
+
+<h3>Sources</h3>
+
+<p>Roblog: <a href="https://robm.me.uk/ruby/2014/01/25/pstore.html">Persisting data in Ruby with PStore</a>
+Codebar: <a href="http://tutorials.codebar.io/ruby/lesson3/tutorial.html">The basics: Storing data - PSTORE</a></p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2015-12-18T10:38:21-05:00" pubdate data-updated="true"></time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/flatiron-school/'>flatiron&nbsp;school</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
   <h2><a href="/blog/2015/12/09/my-first-week-at-flatiron/">My First Week at Flatiron</a></h2>
   
   <p>
@@ -93,51 +205,6 @@ in
 
   
     <a class="full-article-link pull-right" rel="full-article" href="/blog/2015/12/09/my-first-week-at-flatiron/">Read on &rarr;</a>
-  
-</article>
-
-          </div>
-        </div>
-      
-        
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-  <h2><a href="/blog/2015/12/04/my-first-post-on-the-blog/">My First Post on the Blog</a></h2>
-  
-  <p>
-    <p>&ldquo;Hello World!&rdquo;</p>
-
-  </p>
-  <span class="meta">
-    written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2015-12-04T15:04:05-05:00" pubdate data-updated="true"></time>
-    
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/flatiron-school/'>flatiron&nbsp;school</a>
-  
-</span>
-
-
-  </span>
-
-  
-    <a class="full-article-link pull-right" rel="full-article" href="/blog/2015/12/04/my-first-post-on-the-blog/">Read on &rarr;</a>
   
 </article>
 
