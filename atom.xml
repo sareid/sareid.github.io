@@ -4,7 +4,7 @@
   <title><![CDATA[andrew does his best]]></title>
   <link href="http://sareid.github.io/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2015-12-18T13:08:13-05:00</updated>
+  <updated>2015-12-18T13:10:10-05:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Adnrew Reid]]></name>
@@ -20,7 +20,7 @@
     <id>http://sareid.github.io/blog/2015/12/18/pstore-and-me-an-uneasy-alliance</id>
     <content type="html"><![CDATA[<h3>In the beginning&hellip;</h3>
 
-<p>Earlier in the week, when working on a <a href="https://github.com/sareid/cli-project-week-guidelines-web-1115">little NBA player stats CLI program</a>, I had my first run in with Ruby&rsquo;s <a href="http://ruby-doc.org/stdlib-2.1.2/libdoc/pstore/rdoc/PStore.html">PSTORE class</a> - a mechanism that allows you store Ruby objects that persist between instances of the program running. The program we were building let you build a team of ten basketball players, and we wanted a way for the program to remember your team the next time it started up.</p>
+<p>Earlier in the week, when working on a <a href="https://github.com/sareid/cli-project-week-guidelines-web-1115">little NBA player stats CLI program</a>, I had my first run in with Ruby&rsquo;s <a href="http://ruby-doc.org/stdlib-2.1.2/libdoc/pstore/rdoc/PStore.html">PSTORE class</a> - a mechanism that allows you store Ruby objects that persist between instances of the program running. <!--more--> The program we were building let you build a team of ten basketball players, and we wanted a way for the program to remember your team the next time it started up.</p>
 
 <p>After some wrangling, I got PSTORE to work. The program could save an array of Ruby objects upon shutting down (in this case individual basketball players), and then return that same array upon the next startup. I felt great. I felt triumphant!</p>
 
