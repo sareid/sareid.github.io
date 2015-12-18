@@ -4,7 +4,7 @@
   <title><![CDATA[andrew does his best]]></title>
   <link href="http://sareid.github.io/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2015-12-18T13:10:10-05:00</updated>
+  <updated>2015-12-18T13:11:23-05:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Adnrew Reid]]></name>
@@ -98,8 +98,9 @@ Now, when you actually want to read or write to the .pstore file, you need to do
 
 <h3>Sources</h3>
 
-<p>Roblog: <a href="https://robm.me.uk/ruby/2014/01/25/pstore.html">Persisting data in Ruby with PStore</a>
-Codebar: <a href="http://tutorials.codebar.io/ruby/lesson3/tutorial.html">The basics: Storing data - PSTORE</a></p>
+<p>Roblog: <a href="https://robm.me.uk/ruby/2014/01/25/pstore.html">Persisting data in Ruby with PStore</a></p>
+
+<p>Codebar: <a href="http://tutorials.codebar.io/ruby/lesson3/tutorial.html">The basics: Storing data - PSTORE</a></p>
 ]]></content>
   </entry>
   
