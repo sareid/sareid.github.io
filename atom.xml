@@ -4,7 +4,7 @@
   <title><![CDATA[andrew does his best]]></title>
   <link href="http://sareid.github.io/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-01-12T09:44:36-05:00</updated>
+  <updated>2016-01-13T22:12:39-05:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Adnrew Reid]]></name>
@@ -22,7 +22,7 @@
 
 <p>Throughout the first six weeks I&rsquo;ve spent in the Flatiron School&rsquo;s Web Development immersive course, we&rsquo;ve largely stuck to the dark and bewildering world of the back-end, wading waist deep into the nitty-gritty muck and grime of SQL databases and Model View Controller designs. There&rsquo;s been a lot of plain code on plain screens.</p>
 
-<p>But you know what? Sometimes it&rsquo;s nice to feel pretty. So today I&rsquo;m going to talk about front-end frameworks.</p>
+<p>But you know what? Sometimes it&rsquo;s nice to feel pretty. So today I&rsquo;m going to talk about front-end frameworks.<!--more--></p>
 
 <p>In the same way that Rails is a framework of helpful tools for developing web-applications, front-end frameworks bring together a library of CSS, HTML and JavaScript tricks and techniques to help make the process of front-end design easier. Rather than creating default layouts and aesthetics from the ground up, they provide a jumping off point that saves you from doing spending a ton of time making sure that your <code>&lt;div&gt;</code> containers aren&rsquo;t bonkers. In short, they&rsquo;re pretty neat.</p>
 
