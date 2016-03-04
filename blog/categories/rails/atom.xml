@@ -1,78 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>The People vs Turbolinks - andrew does his best</title>
-  <meta name="author" content="Andrew Reid">
-
-  
-  <meta name="description" content="The People vs Turbolinks written in flatiron&nbsp;school, rails This week, as part of the Flatiron Students Present series I gave a presentation on &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><![CDATA[Category: Rails | andrew does his best]]></title>
+  <link href="http://sareid.github.io/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://sareid.github.io/"/>
+  <updated>2016-03-04T15:37:07-05:00</updated>
+  <id>http://sareid.github.io/</id>
+  <author>
+    <name><![CDATA[Andrew Reid]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-  <link rel="canonical" href="http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="andrew does his best" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Crimson+Text' rel='stylesheet' type='text/css'>
-  
-
-</head>
-
-  <body>
-    <a href="/" class="home-icon">
-      <img src="/images/home.png"/>
-    </a>
-
-    <article role="article" class="full-single-article">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <h1>The People vs Turbolinks</h1>
-        <div class="meta">
-          written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2016-01-27T07:40:57-05:00" pubdate data-updated="true"></time>
-          
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/flatiron-school/'>flatiron&nbsp;school</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
-  
-</span>
-
-
-        </div>
-        <p>This week, as part of the Flatiron Students Present series I gave a presentation on the new features coming in <a href="http://weblog.rubyonrails.org/2015/12/18/Rails-5-0-beta1/">Rails 5.</a>. There&rsquo;s some really intriguing stuff, highlighted by the Railsified websocket goodness of <a href="https://github.com/rails/rails/tree/master/actioncable">Action Cable</a>. Nestled in there is the news of <s>Turbolinks 3</s> Turbolinks 5, the latest version of a Rails feature I was totally unfamiliar with.<!--more--></p>
+  <entry>
+    <title type="html"><![CDATA[The People vs Turbolinks]]></title>
+    <link href="http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks/"/>
+    <updated>2016-01-27T07:40:57-05:00</updated>
+    <id>http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks</id>
+    <content type="html"><![CDATA[<p>This week, as part of the Flatiron Students Present series I gave a presentation on the new features coming in <a href="http://weblog.rubyonrails.org/2015/12/18/Rails-5-0-beta1/">Rails 5.</a>. There&rsquo;s some really intriguing stuff, highlighted by the Railsified websocket goodness of <a href="https://github.com/rails/rails/tree/master/actioncable">Action Cable</a>. Nestled in there is the news of <s>Turbolinks 3</s> Turbolinks 5, the latest version of a Rails feature I was totally unfamiliar with.<!--more--></p>
 
 <p>I was interested to learn more about this unfamiliar thing, so I turned on my internet and delved into some documentation and blogs on the topic, prepared to learn a cool new thing. But I was suprised by what I found: <a href="http://staal.io/blog/2013/01/18/dangers-of-turbolinks/.">criticism.</a> <a href="https://plus.google.com/+YehudaKatz/posts/A65agXRynUn">A lot.</a> <a href="http://railscasts.com/episodes/390-turbolinks?view=comments">Of.</a> <a href="https://www.reddit.com/r/rails/comments/30yj2s/what_are_some_arguments_against_turbolinks/">Criticism.</a></p>
 
@@ -90,8 +36,7 @@ in
 
 <p>So, what do Turbolinks do? From the source:</p>
 
-<blockquote><p>Turbolinks makes following links in your web application faster. Instead of letting the browser recompile the JavaScript and CSS between each page change, it keeps the current page instance alive and replaces only the body (or parts of) and the title in the head.</p><footer><strong>ReadMe</strong> <cite><a href='https://github.com/rails/turbolinks'>Turbolinks on Github</a></cite></footer></blockquote>
-
+<p><blockquote><p>Turbolinks makes following links in your web application faster. Instead of letting the browser recompile the JavaScript and CSS between each page change, it keeps the current page instance alive and replaces only the body (or parts of) and the title in the head.</p><footer><strong>ReadMe <a href="https://github.com/rails/turbolinks">https://github.com/rails/turbolinks</a> Turbolinks on Github</strong></footer></blockquote></p>
 
 <p>That&rsquo;s rad, right? I want to make my links faster! And thats great that I don&rsquo;t need to redownload my CSS and JS resources each time I click a link. It seems to me like that would be great for the user experience, especially on mobile devices.</p>
 
@@ -107,18 +52,13 @@ in
 
 <p><img src="http://4.bp.blogspot.com/-6nfZppXwU-8/UzmIKYHEdQI/AAAAAAAAVN8/cRJBP35197k/s1600/Marshall.gif" alt="not ready for this" /></p>
 
-<p>If you&rsquo;ve spent any time with JavaScript, then you&rsquo;ve seen the document ready event. It looks something like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span> <span class="nb">document</span> <span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&quot;ready!&quot;</span> <span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Simply put, it&rsquo;s a function that is triggered once your document is ready (eg: all your resources have loaded, the DOM is in place, etc). It&rsquo;s really helpful for a lot of things, and let&rsquo;s you ensure that none of your JavaScript functions are triggered before you want them to, which could cause problems especially if the user is manipulating elements in the document before its fully ready.</p>
+<p>If you&rsquo;ve spent any time with JavaScript, then you&rsquo;ve seen the document ready event. It looks something like this:
+<code>javascript
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
+</code>
+Simply put, it&rsquo;s a function that is triggered once your document is ready (eg: all your resources have loaded, the DOM is in place, etc). It&rsquo;s really helpful for a lot of things, and let&rsquo;s you ensure that none of your JavaScript functions are triggered before you want them to, which could cause problems especially if the user is manipulating elements in the document before its fully ready.</p>
 
 <p>Unfortunately, Turbolinks don&rsquo;t call this event, as they aren&rsquo;t calling a direct page reload. Think of all the things that we might include within a document ready event, like .click() listeners. You could end up with a totally inert and non-functional page.</p>
 
@@ -175,66 +115,7 @@ in
 <p><img src="https://media.giphy.com/media/RtPicSw8rpiEw/giphy.gif" alt="unexpected" /></p>
 
 <p>At the end of the day, Turbolinks is likely to bring you unexpected consequences. It can introduce the most unexpected of problems into your app, requiring lots of bug squashing, troubleshooting, stack overflow googling, and tearful calls to your parents to let them know that the chances that you&rsquo;ll have to move back in with them have gone up.</p>
-
-
-        <hr class="divider-short"/>
-
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-<hr class="divider-short"/>
-
-<div class="archive-link">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        
-          <a class="pull-left" href="/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/" title="Previous Post: Bootstrap: Making front-end development easier since 1842 (note to self: check dates)">&laquo; Previous: Bootstrap: Making front-end development easier since 1842 (note to self: check dates)</a>
-        
-
-        
-          <a class="pull-right" href="/blog/2016/02/25/computed-properties-in-ember-dot-js/" title="Next Post: Computed Properties in Ember.js">Next: Computed Properties in Ember.js &raquo;</a>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-    <footer id="footer" class="her-row">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-1">
-  <a href="/"><h4>Home</h4></a>
-</div>
-
-<div class="col-md-2">
-  <div class="social-icon-list">
-    
-    <a href="https://twitter.com/doeshisbest"><img src="/images/glyphicons_social_31_twitter.png"/></a>
-    
-
-    
-    <a href="https://github.com/sareid"><img src="/images/glyphicons_social_21_github.png"/></a>
-    
-
-    
-
-    
-  </div>
-</div>
-
-<div class="pull-right">
-  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-</div>
-
-
-    </div>
-  </div>
-</footer>
-
-    
-  </body>
-</html>
+]]></content>
+  </entry>
+  
+</feed>
