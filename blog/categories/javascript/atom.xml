@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Rails | andrew does his best]]></title>
-  <link href="http://sareid.github.io/blog/categories/rails/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Javascript | andrew does his best]]></title>
+  <link href="http://sareid.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
   <updated>2016-04-28T12:48:12-04:00</updated>
   <id>http://sareid.github.io/</id>
@@ -102,111 +102,6 @@
 <h3>Conclusion</h3>
 
 <p>As you can see, this is a pretty neat trick for scoping your JavaScript to a particular type of view in your Rails app. Using dynamically generated class attributes in your <code>&lt;body&gt;</code> tag, you can have as many specific JavaScript <code>.ready()</code> functions as you have controller actions and views. And don&rsquo;t forget - with these dynamic class attributes, you can also create corresponding custom CSS for particular views too.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The People vs Turbolinks]]></title>
-    <link href="http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks/"/>
-    <updated>2016-01-27T07:40:57-05:00</updated>
-    <id>http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks</id>
-    <content type="html"><![CDATA[<p>This week, as part of the Flatiron Students Present series I gave a presentation on the new features coming in <a href="http://weblog.rubyonrails.org/2015/12/18/Rails-5-0-beta1/">Rails 5.</a>. There&rsquo;s some really intriguing stuff, highlighted by the Railsified websocket goodness of <a href="https://github.com/rails/rails/tree/master/actioncable">Action Cable</a>. Nestled in there is the news of <s>Turbolinks 3</s> Turbolinks 5, the latest version of a Rails feature I was totally unfamiliar with.<!--more--></p>
-
-<p>I was interested to learn more about this unfamiliar thing, so I turned on my internet and delved into some documentation and blogs on the topic, prepared to learn a cool new thing. But I was suprised by what I found: <a href="http://staal.io/blog/2013/01/18/dangers-of-turbolinks/.">criticism.</a> <a href="https://plus.google.com/+YehudaKatz/posts/A65agXRynUn">A lot.</a> <a href="http://railscasts.com/episodes/390-turbolinks?view=comments">Of.</a> <a href="https://www.reddit.com/r/rails/comments/30yj2s/what_are_some_arguments_against_turbolinks/">Criticism.</a></p>
-
-<p>People hate Turbolinks. Like&hellip;a whole bunch. Even people who otherwise love Rails. It&rsquo;s like Rails is the Backstreet Boys and Turbolinks is Kevin.</p>
-
-<p><img src="http://i.imgur.com/UWuJDkQ.jpg" alt="Kevin Richardson was not a beloved Backstreet Boy" /></p>
-
-<p>Hell, even the creator of Rails seemingly understands the state of Turbolinks, as evidenced by the way he <a href="https://www.youtube.com/watch?v=KJVTM7mE1Cc&amp;feature=youtu.be&amp;t=1660">broached the subject in his 2015 Railsconf keynote speech.</a></p>
-
-<p><img src="http://i.imgur.com/2zB8f1E.png" alt="David Heinemeier Hensen introducing Turbolinks 3" /></p>
-
-<p>Clearly there&rsquo;s a lot of antipathy directed towards Turbolinks, but why? I think it&rsquo;s important to understand why bad things are bad, either to help fix them or to avoid making the same mistakes again. So in today&rsquo;s blogpost, I&rsquo;m going to be taking a deeper look into the bleak edge of hell that is the world of Turbolinks.</p>
-
-<h3>Understanding Turbolinks.</h3>
-
-<p>So, what do Turbolinks do? From the source:</p>
-
-<p><blockquote><p>Turbolinks makes following links in your web application faster. Instead of letting the browser recompile the JavaScript and CSS between each page change, it keeps the current page instance alive and replaces only the body (or parts of) and the title in the head.</p><footer><strong>ReadMe <a href="https://github.com/rails/turbolinks">https://github.com/rails/turbolinks</a> Turbolinks on Github</strong></footer></blockquote></p>
-
-<p>That&rsquo;s rad, right? I want to make my links faster! And thats great that I don&rsquo;t need to redownload my CSS and JS resources each time I click a link. It seems to me like that would be great for the user experience, especially on mobile devices.</p>
-
-<p>Delving deeper into the nitty-gritty, Turbolinks takes over any llink, sends an AJAX request for the content, and replaces the <code>&lt;body&gt;</code> on your current page with that fresh new content. It&rsquo;s basically a PJAX request - a portmonteau of <code>pushState</code> and <code>AJAX</code>.</p>
-
-<h3>Abandon all hope ye who Turbolink here</h3>
-
-<p>So, as I indicated at the top of this blog, there has been a lot of criticism directed towards Turbolinks. It&rsquo;s like it&rsquo;s the worst thing on the internet.</p>
-
-<p>&hellip;so, in the spirit of &lsquo;terrible things that exist on the internet&rsquo;, here&rsquo;s a Buzzfeed-style Listicle of 7 bad things about Turbolinks.</p>
-
-<h4>1. Document ready event.</h4>
-
-<p><img src="http://4.bp.blogspot.com/-6nfZppXwU-8/UzmIKYHEdQI/AAAAAAAAVN8/cRJBP35197k/s1600/Marshall.gif" alt="not ready for this" /></p>
-
-<p>If you&rsquo;ve spent any time with JavaScript, then you&rsquo;ve seen the document ready event. It looks something like this:
-<code>javascript
-$( document ).ready(function() {
-    console.log( "ready!" );
-});
-</code>
-Simply put, it&rsquo;s a function that is triggered once your document is ready (eg: all your resources have loaded, the DOM is in place, etc). It&rsquo;s really helpful for a lot of things, and let&rsquo;s you ensure that none of your JavaScript functions are triggered before you want them to, which could cause problems especially if the user is manipulating elements in the document before its fully ready.</p>
-
-<p>Unfortunately, Turbolinks don&rsquo;t call this event, as they aren&rsquo;t calling a direct page reload. Think of all the things that we might include within a document ready event, like .click() listeners. You could end up with a totally inert and non-functional page.</p>
-
-<p>There are gem workarounds (eg: for <a href="https://github.com/kossnocorp/jquery.turbolinks">jQuery</a>), but the problem is there and needs to be addressed on a case by case basis.</p>
-
-<h4>2. Global scope does not get wiped.</h4>
-
-<p><img src="https://media.giphy.com/media/w0h5LmXICRdEA/giphy.gif" alt="scope commercial" /></p>
-
-<p>Turbolinks claims to save time by not reloading your assets. This is true. But assets aren&rsquo;t the only thing that remain. The global scope is saved too, meaning that even when it seems like Turbolinks has reloaded a new page, your JavaScript scope is persisting.  This is problematic because a lot of JavaScript is written under the assumption that global scope is wiped clean everytime a new page is loaded. This can lead to some wonky results with your scripts, as, for example, multiple bindings can pile up on each other.</p>
-
-<p><a href="https://github.com/rails/turbolinks/issues/87">Here&rsquo;s an example</a> of someone trouble shooting this very issue. In their case, buttons that look like this on your initial page load:</p>
-
-<p><img src="http://content.screencast.com/users/pomartel/folders/Jing/media/d006b968-66fd-4e3f-a38b-27dbf8da053d/00000012.png" alt="button issue" /></p>
-
-<p>&hellip;ended up looking this after a Turbolink is used:</p>
-
-<p><img src="http://content.screencast.com/users/pomartel/folders/Jing/media/ebcd3706-c1f7-40e7-aa6d-7541045eb1ce/00000014.png" alt="button issue 2" /></p>
-
-<h4>3. SERIOUSLY GUYS. GLOBAL SCOPE DOES NOT GET WIPED.</h4>
-
-<p><img src="https://media.giphy.com/media/Gv7i18CFKK1xK/giphy.gif" alt="seriously" /></p>
-
-<p>I&rsquo;m restating this because it bears restating. GLOBAL SCOPE DOESN&rsquo;T GET WIPED. You can catch a lot of the issues related to things like bindings and avoid them in your code. But there are more complicated issues. For example, a lot of Backbone applications use <code>window</code> as a global namespace to store variable instances, like a collection, model or view.</p>
-
-<p>This means that as you reload a page with Turbolinks, that collection, model or view persist even as new Backbone applications load, leading to all sorts of failures related to incorrect data or inapplicable DOM event bindings. FUN STUFF Turbolinks.</p>
-
-<p>There are many other issues - like timers and intervals not resetting - but the point stands: Turbolinks not wiping the global scope is a huge bummer.</p>
-
-<h4>4. Memory issues</h4>
-
-<p><img src="http://49.media.tumblr.com/tumblr_m2ojlk0unA1r4dyzwo1_500.gif" alt="memories" /></p>
-
-<p>Another issue relates to memory usage. Turbolinks stores the DOM trees of the last 10 pages you&rsquo;ve loaded. Typically, we are able to &lsquo;forget&rsquo; JavaScript applications as we move through a website by automatically destroying things that are not directly referenced.</p>
-
-<p>But Turbolinks saves those DOMS. And those DOMS have bindings. And those bindings reference applications&hellip;meaning that it&rsquo;s possible for your Turbolinks to cause your application to use up to 10x the RAM that it would otherwise. Neato.</p>
-
-<p>Oh&hellip;also&hellip;the fact that it remembers those DOMs, bindings and applications is also likely to break your app when you go back a page. Double neato.</p>
-
-<h4>5. Not necessarily better than AJAX.</h4>
-
-<p><img src="https://media.giphy.com/media/M5IasgJaB9CXm/giphy.gif" alt="not better" /></p>
-
-<p>In many cases, Turbolinks can be slower than an AJAX call, as Turbolinks returns fully rendered views of the website, rather than a smaller, more targeted string that can be added to your page where you want.</p>
-
-<h4>6. Problems with CoffeeScript</h4>
-
-<p><img src="https://media.giphy.com/media/eWLDhSJ206rUQ/giphy.gif" alt="coffee bill murray" /></p>
-
-<p>Another common issue relates to the use of CoffeeScript and Turbolinks. As CoffeeScript encloses your code in an anonymous function that can be triggered multiple times when using a <code>jquery.turbolinks.js</code> file.</p>
-
-<h4>7. This programmer installed Turbolinks on their app. You&rsquo;ll never believe what happens next.</h4>
-
-<p><img src="https://media.giphy.com/media/RtPicSw8rpiEw/giphy.gif" alt="unexpected" /></p>
-
-<p>At the end of the day, Turbolinks is likely to bring you unexpected consequences. It can introduce the most unexpected of problems into your app, requiring lots of bug squashing, troubleshooting, stack overflow googling, and tearful calls to your parents to let them know that the chances that you&rsquo;ll have to move back in with them have gone up.</p>
 ]]></content>
   </entry>
   

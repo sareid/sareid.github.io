@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flatiron&nbsp;school | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-03-20T20:58:38-04:00</updated>
+  <updated>2016-04-28T12:48:12-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -225,7 +225,9 @@ gem 'autoprefixer-rails'
     <link href="http://sareid.github.io/blog/2015/12/18/pstore-and-me-an-uneasy-alliance/"/>
     <updated>2015-12-18T10:38:21-05:00</updated>
     <id>http://sareid.github.io/blog/2015/12/18/pstore-and-me-an-uneasy-alliance</id>
-    <content type="html"><![CDATA[<h3>In the beginning&hellip;</h3>
+    <content type="html"><![CDATA[<p>EDIT: I literally wrote this post the day before I learned what SQL was. Oh the folly of youth.</p>
+
+<h3>In the beginning&hellip;</h3>
 
 <p>Earlier in the week, when working on a <a href="https://github.com/sareid/cli-project-week-guidelines-web-1115">little NBA player stats CLI program</a>, I had my first run in with Ruby&rsquo;s <a href="http://ruby-doc.org/stdlib-2.1.2/libdoc/pstore/rdoc/PStore.html">PSTORE class</a> - a mechanism that allows you store Ruby objects that persist between instances of the program running. <!--more--> The program we were building let you build a team of ten basketball players, and we wanted a way for the program to remember your team the next time it started up.</p>
 
