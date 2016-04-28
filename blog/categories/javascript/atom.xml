@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-04-28T13:42:49-04:00</updated>
+  <updated>2016-04-28T16:14:00-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -18,7 +18,7 @@
     <link href="http://sareid.github.io/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/"/>
     <updated>2016-04-28T11:36:24-04:00</updated>
     <id>http://sareid.github.io/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails</id>
-    <content type="html"><![CDATA[<p>The <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails Asset Pipeline</a> is a really great tool that improves performance by compressing and minifying assets, as well as compiling JS and CSS assets written in other languages, like CoffeeScript and SASS. When compiled, the files in your <code>app/assets/javascripts/</code> folder get processed and minified into a single <code>application.js</code> file. In many cases, this is great - all of the views in your app have access to this file at all times. But what happens if you want to dynamicaly scope JavaScript functions to specific pages in your app, like a function that only fires when an object view page is loaded?<!--more--></p>
+    <content type="html"><![CDATA[<p>The <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails Asset Pipeline</a> is a really great tool that improves performance by compressing and minifying assets, as well as compiling JS and CSS assets written in other languages, like CoffeeScript and SASS. When compiled, the files in your <code>app/assets/javascripts/</code> folder get processed and minified into a single <code>application.js</code> file. In many cases, this is great - all of the views in your app have access to this file at all times, and it cuts down on the number of server requests made by the browser. But what happens if you want to dynamicaly scope JavaScript functions to specific pages in your app, like a function that only fires when an object view page is loaded?<!--more--></p>
 
 <p>I recently built a <a href="https://github.com/sareid/carrier-selector">small Rails app</a> as a part of an exercise in data analysis and visualisation. Using a set of On-Time performance data for flights in the United States, it visualised various performance criteria to help determine what carrier would be ideal for a New York-based company. As part of the challenge, I wanted to create maps visualising the metropolitan areas served by each carrier, and the relative population sizes of these areas. Here&rsquo;s what the end product looked like:</p>
 

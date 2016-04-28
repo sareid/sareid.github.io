@@ -60,7 +60,7 @@
   <h2><a href="/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/">Creating Page-specific JavaScript and CSS in Rails</a></h2>
   
   <p>
-    <p>The <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails Asset Pipeline</a> is a really great tool that improves performance by compressing and minifying assets, as well as compiling JS and CSS assets written in other languages, like CoffeeScript and SASS. When compiled, the files in your <code>app/assets/javascripts/</code> folder get processed and minified into a single <code>application.js</code> file. In many cases, this is great - all of the views in your app have access to this file at all times. But what happens if you want to dynamicaly scope JavaScript functions to specific pages in your app, like a function that only fires when an object view page is loaded?</p>
+    <p>The <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails Asset Pipeline</a> is a really great tool that improves performance by compressing and minifying assets, as well as compiling JS and CSS assets written in other languages, like CoffeeScript and SASS. When compiled, the files in your <code>app/assets/javascripts/</code> folder get processed and minified into a single <code>application.js</code> file. In many cases, this is great - all of the views in your app have access to this file at all times, and it cuts down on the number of server requests made by the browser. But what happens if you want to dynamicaly scope JavaScript functions to specific pages in your app, like a function that only fires when an object view page is loaded?</p>
 
   </p>
   <span class="meta">
