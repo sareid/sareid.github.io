@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Front-end | andrew does his best]]></title>
+  <title><![CDATA[Category: front-end | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/front-end/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-04-28T16:14:00-04:00</updated>
+  <updated>2016-07-15T19:18:15-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -14,7 +14,351 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Creating Page-specific JavaScript and CSS in Rails]]></title>
+    <title type="html"><![CDATA[Query Params, Metadata and Pagination in Ember.js]]></title>
+    <link href="http://sareid.github.io/blog/2016/07/13/using-query-params-in-ember-dot-js/"/>
+    <updated>2016-07-13T14:09:31-04:00</updated>
+    <id>http://sareid.github.io/blog/2016/07/13/using-query-params-in-ember-dot-js</id>
+    <content type="html"><![CDATA[<p>A little earlier this year, I was reading an organisation&rsquo;s style guide for working with Ember.js, when I encountered reference to the use of &lsquo;query params&rsquo; in a controller. At the time, still relatively new to Ember, I had no idea what this meant. In the intervening time, though I&rsquo;ve learned a lot. Basically, query params allow for certain application states to be serialised into the URL that wouldn&rsquo;t be otherwise possible through the regular use of routes. In this blog post, I&rsquo;m going to explain the role of query params, and how they can be used in your Ember app to provide some neat functionality. I&rsquo;ll be using a sample Ember.js front-end app, with a Rails API on the back-end.<!--more--></p>
+
+<h3>Query Param Basics</h3>
+
+<p>Consider the following URL: <code>http://www.fakewebsite.com/recipes?page=2</code>. The text to the right of the &lsquo;?&rsquo; is a query param - in this case &lsquo;page&rsquo;, with a value of 2. As you might guess, this url represents the second &lsquo;page&rsquo; of a longer list of recipes. If you had 1000 recipes in your database, you can understand the utility for paginating the index page into smaller chunks. The user probably finds it easier to read a smaller number of recipes, from a UX perspective it may be preferable to avoid scrolling through long lists, and if there is any heavy logic being done on the back-end, it&rsquo;s faster to simply request 10, 25 or 50 entries at a time than the full 1000. Other uses for query params can include sorting and filtering your database according to certain properties.</p>
+
+<p>Query params are declared in the relevant controller of the route you&rsquo;re working with. So, if you want query params for a &lsquo;recipes&rsquo; route, the query params are declared in <code>app/controllers/recipes.js</code> (or the <code>controller.js</code> file in the <code>recipes</code> directory if you&rsquo;re working with pods). Specific instructions for declaring query params can be <a href="https://guides.emberjs.com/v2.6.0/routing/query-params/">found in the Ember docs</a>, but lets build out an app to see how they work.</p>
+
+<h3>Getting started</h3>
+
+<p>To test out query params, I built an Ember.js app that displays a list of friends with a number of properties (like name, email, phone number, age, etc). The data is served as JSON from a Rails API.</p>
+
+<p>The finished code can be found here:
+<a href="https://github.com/sareid/query-params">Ember front-end</a>
+<a href="https://github.com/sareid/query-params-api">Rails API</a></p>
+
+<h3>Setting up the Rails API and adding a root node</h3>
+
+<p>I&rsquo;m not going to go into all the steps of setting up a Rails API. Sophie DeBenedetto has a great step-by-step guide for this on her blog <a href="http://www.thegreatcodeadventure.com/building-a-super-simple-rails-api/">here</a>. This app has a single model, Person, and a single route <code>people</code>. You can take a look at the migration files to see the properties of the model.</p>
+
+<p>To populate the database with entries, I wrote a <code>seed.rb</code> file that makes 400 instances of people using the <a href="https://github.com/stympy/faker">Faker game</a> which automatically generates content for different types of properties, like this:
+<code>ruby
+400.times do
+  person = Person.create(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    nick_name: Faker::Superhero.name,
+    age: Faker::Number.between(18, 99),
+    email: Faker::Internet.email,
+    phone: Faker::PhoneNumber.phone_number,
+    friends_since: Faker::Time.backward(5004, :evening)
+  )
+end
+</code></p>
+
+<p>There is one extra thing we need to do beyond Sophie&rsquo;s instructions: recent updates to the Active Model Serializer gem use the <code>Attributes</code> adapter for serializing JSON, which excludes the root node (eg, the name of the model). As such, we get JSON like this:</p>
+
+<pre><code class="json">{
+id: 1,
+first_name: "Aiden",
+last_name: "Stamm",
+nick_name: "Doctor Match",
+age: 35,
+email: "devan@predovicortiz.org",
+phone: "562.135.0643 x8216",
+friends_since: "2007-01-09T00:49:32.000Z"
+},
+{
+id: 2,
+first_name: "Jamie",
+last_name: "Boyer",
+nick_name: "Songbird",
+age: 56,
+email: "neva@hartmann.co",
+phone: "(858) 284-7728",
+friends_since: "2007-07-30T21:08:20.000Z"
+}
+</code></pre>
+
+<p>For the model hook in Ember to function properly, we need a root node with the name of model. To do so, we need to instruct Rails to use the <code>JSON</code> adapter. In the <code>config/intializers</code> director, I included a <code>serializer.rb</code> file with the following line of code:</p>
+
+<pre><code class="ruby">ActiveModelSerializers.config.adapter = :json
+</code></pre>
+
+<p>With that change, the JSON served by our API looks like this:</p>
+
+<pre><code class="json">people: [
+{
+id: 1,
+first_name: "Aiden",
+last_name: "Stamm",
+nick_name: "Doctor Match",
+age: 35,
+email: "devan@predovicortiz.org",
+phone: "562.135.0643 x8216",
+friends_since: "2007-01-09T00:49:32.000Z"
+},
+{
+id: 2,
+first_name: "Jamie",
+last_name: "Boyer",
+nick_name: "Songbird",
+age: 56,
+email: "neva@hartmann.co",
+phone: "(858) 284-7728",
+friends_since: "2007-07-30T21:08:20.000Z"
+}
+]
+</code></pre>
+
+<p>That&rsquo;s great for now - our API is serving JSON. Let&rsquo;s set up our Ember front-end.</p>
+
+<h3>Building an Ember app and connecting it to the API</h3>
+
+<p>To start, generate a new Ember app with the <code>ember new</code> command (for more, <a href="https://guides.emberjs.com/v2.6.0/getting-started/quick-start/#toc_create-a-new-application">see the Ember docs</a>).</p>
+
+<p>In this project, I just wanted to build an index page for all the people in the database. As such, we need to set up the route, model, route handler, template and controller for &lsquo;people&rsquo; (fun note: the Inflector in Rails is smart enough to know that &lsquo;people&rsquo; is the plural of &lsquo;person&rsquo;). Run <code>ember g resource people</code>. This creates three important files: <code>app/models/person.js</code>, <code>app/routes/donkey.js</code>, and <code>app/templates/people.hbs</code> (as well as a file for tests). It also adds the appropriate route - if you look in your <code>app/router.js</code> file you&rsquo;ll see the following:</p>
+
+<pre><code class="javascript">import Ember from 'ember';
+import config from './config/environment';
+
+const Router = Ember.Router.extend({
+  location: config.locationType
+});
+
+Router.map(function() {
+  this.route('people');
+});
+
+export default Router;
+</code></pre>
+
+<p>If we run our server (<code>ember s</code>) we can navigate to <code>http://localhost:4200/people</code>. There&rsquo;s nothing there yet, of course, but it&rsquo;s a route! We need to fill out a few more things before our Ember app can actually make requests to our Rails API. First, lets build out the rest of the &lsquo;people&rsquo; resource.</p>
+
+<p>We need to define the &lsquo;person&rsquo; model and the types of properties that will provided by our API. In <code>app\models\person.js</code> we add the following:</p>
+
+<pre><code class="javascript">import DS from 'ember-data';
+import attr from 'ember-data/attr';
+
+export default DS.Model.extend({
+  first_name: attr(),
+  last_name: attr(),
+  nick_name: attr(),
+  age: attr(),
+  email: attr(),
+  phone: attr(),
+  friends_since: attr(),
+
+});
+</code></pre>
+
+<p>We then need to add a model hook to the &lsquo;people&rsquo; route handler that will load the model from the store. In the <code>app\routes\people.js</code> we add the following:</p>
+
+<pre><code class="javascript">
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model: function() {
+    return this.store.findAll('person');
+  }
+});
+</code></pre>
+
+<p>For the moment, we don&rsquo;t need to add anything new to our controller, but we do need to fill out the <code>app/templates/people.hbs</code> template a bit. To make our front-end stylign a little simpler, I&rsquo;m using the <a href="http://foundation.zurb.com/">Zurb Foundation</a> responsive framework. Don&rsquo;t worry if you don&rsquo;t understand how it works. I installed into my Ember app using the <a href="https://github.com/nadavshatz/ember-cli-foundation-sass">Ember Cli Foundation Sass addon</a>.</p>
+
+<p>In the template, I build a table of all the people in our database using the <code></code> helper. It looks like this (ignore the spaces between the curly braces):</p>
+
+<p>```</p>
+
+<table>
+  <thead>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Nickname</th>
+    <th>Age</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Friends Since</th>
+  </thead>
+  <tbody>
+    { {#each model as |person|} }
+    <tr>
+      <td>{ {person.first_name} }</td>
+      <td>{ {person.last_name} }</td>
+      <td>{ {person.nick_name} }</td>
+      <td>{ {person.age} }</td>
+      <td>{ {person.email} }</td>
+      <td>{ {person.phone} }</td>
+      <td>{ {person.friends_since} }</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+
+<p><code>``
+If we navigate to</code><a href="http://localhost:4200/people">http://localhost:4200/people</a>` we can see our table rendered with the people in our database! That&rsquo;s great. Though, with 400 entries in the database, it involves a LOT of scrolling:</p>
+
+<div style='position:relative;padding-bottom:calc(100% / 1.60)'><iframe src='https://gfycat.com/ifr/TiredHeavyAidi' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
+
+
+<p>Ideally, we&rsquo;d like to see things in smaller chunks - that&rsquo;s the whole point of this blog post, afterall! To do this, we need to go back to our API and include some metadata about pagination in the JSON being served.</p>
+
+<h3>Paginating JSON and serving metadata</h3>
+
+<p>When a GET request is sent to the <code>api/v1/people</code> route of our API, the back-end is current serving all 400 entries back as a response. We need a way to both break the JSON being served into smaller segments, but also to serve information about the data itself (metadata). In the case of pagination, this metadata will include information like how many chunks or &lsquo;pages&rsquo; the database has been segmented into, as well as the current page being served.</p>
+
+<p>The simplest way to incorpate pagination into your API is through the <a href="https://github.com/amatsuda/kaminari">Kaminari gem</a>. There are other options out there, but the comments I&rsquo;ve seen on Stack Overflow and elsewhere seem to favour this gem. Install it by including <code>gem 'kaminari'</code> in your Gemfile, and running <code>$ bundle</code>. With this done, we need to make some changes to our People Controller, as follows:</p>
+
+<pre><code class="ruby">class Api::V1::PeopleController &lt; ApplicationController
+
+  def index
+
+    info = {
+      page: params[:page] || 1,
+      per_page: params[:per_page] || 10
+    }
+
+    @people = Person.page(info[:page]).per(info[:per_page])
+
+    render json: @people, params: info
+  end
+
+end
+</code></pre>
+
+<p>The info hash sets defaults for the current page, as well as the number of entries per page. Eventually, params included in requests from the Ember app will include the page number, which is what is being used when the Person model is being queried to create the <code>@people</code> variable being rendered as JSON. If we go to <code>http://localhost:3000/people</code>, we&rsquo;ll see that only 10 entries are being served in the JSON. If we got to <code>http://localhost:3000/api/v1/people?page=2</code> we see the next 10 in the database. Cool!</p>
+
+<p>But that&rsquo;s not all - we also need to serve the metadata, telling the Ember app things like which page we&rsquo;re on and how many pages there currently are. Looking at the <a href="https://github.com/rails-api/active_model_serializers/blob/master/docs/howto/add_pagination_links.md#json-adapter">documentation for Active Model Serializer</a>, the solution is quite simple. In our API controller (effectively the application controller), we add the following:</p>
+
+<pre><code class="ruby">def pagination_dict(object)
+  {
+    current_page: object.current_page,
+    next_page: object.next_page,
+    prev_page: object.prev_page, # use object.previous_page when using will_paginate
+    total_pages: object.total_pages,
+    total_count: object.total_count
+  }
+end
+</code></pre>
+
+<p>And in our People Controller, we make a small addition to the code rendering our JSON:</p>
+
+<pre><code class="ruby">class Api::V1::PeopleController &lt; ApplicationController
+
+  def index
+
+    info = {
+      page: params[:page] || 1,
+      per_page: params[:per_page] || 10
+    }
+
+    @people = Person.page(info[:page]).per(info[:per_page])
+
+    render json: @people, params: info, meta: pagination_dict(@people)
+  end
+end
+</code></pre>
+
+<p>Our JSON now has a &lsquo;meta&rsquo; key attached to the end, like this:</p>
+
+<pre><code class="json">meta: {
+current_page: 1,
+next_page: 2,
+prev_page: null,
+total_pages: 40,
+total_count: 400
+}
+</code></pre>
+
+<p>We&rsquo;ll be able to execute a query for this in the People route handler in Ember, giving us access to this metadata in the view. So, now it&rsquo;s time to head back to the Ember app!</p>
+
+<h3>Handling metadata and pagination in Ember</h3>
+
+<p>We need to do a number of steps to handle and use the metadata being served with our JSON in Ember. First, we go to the route handler and change the code to the following:</p>
+
+<pre><code class="javascript">import Ember from 'ember';
+
+export default Ember.Route.extend({
+
+  queryParams: {
+    page: {
+      refreshModel: true
+    }
+  },
+
+  model: function(params){
+    return this.store.query('person', params);
+  }
+
+});
+</code></pre>
+
+<p>We&rsquo;ve done a couple of things here. The queryParams property includes a key called &lsquo;page&rsquo;. By setting the refreshModel property to &lsquo;true&rsquo;, any changes to the page query param will fire the model hook and make a new request to the API. So if the url is changed from <code>http://localhost:4200/people</code> to <code>http://localhost:4200/people?page=2</code>, the model will be updated automatically.</p>
+
+<p>Next, we need to actually declare our &lsquo;page&rsquo; query param in the <code>app/controllers/people.js</code> file, and give it some logic.</p>
+
+<pre><code class="javascript">import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  queryParams: ['page'],
+  page: 1,
+
+  metaData: Ember.computed('model', function(){
+    let meta = this.get('model.meta');
+    meta['second_last'] = meta.total_pages - 1;
+    meta['third_last'] = meta.total_pages - 2;
+    return meta;
+  }),
+
+  lastThreePages: Ember.computed('model', function(){
+    if (this.get('page') &lt; this.get('metaData.total_pages') - 3) {
+      return false;
+    } else {
+      return true;
+    }
+  }),
+
+  actions: {
+    nextPage() {
+      if (this.get('page') &lt; this.get('metaData.total_pages')){
+        let page = this.get('page');
+        this.set('page', page + 1);
+      }
+    },
+
+    prevPage() {
+      if (this.get('page') &gt; 1) {
+        this.set('page', this.get('page') - 1);
+      }
+    }
+  }
+
+});
+</code></pre>
+
+<p>So what&rsquo;s going on here? First, the <code>queryParams</code> array is defining which specific query params we&rsquo;ll be using. In this case, just one: &lsquo;page&rsquo;. The &lsquo;page&rsquo; property below it gives it a default value of 1 - so if we navigate to just <code>http://localhost:4200/people</code>, it will assume we want the first page.</p>
+
+<p>In the <code>metaData</code> computed property, we are accessing the information in the &lsquo;meta&rsquo; key in the JSON our API is serving, giving us access in the view to information like the current page, which we can invoke with <code>metaData.current_page</code>.</p>
+
+<p>There are also a pair of actions: <code>nextPage</code> and <code>prevPage</code>. These do pretty much what you&rsquo;re thinking they will: when triggered, it will change the &lsquo;page&rsquo; query param to the next or previous page, thus updating the model and serving new entries from the database in our view. In the template we&rsquo;ll have two buttons that trigger these actions. We use conditional statements to make sure we can&rsquo;t advance past the last page in the database, or to a page number lower than 1.</p>
+
+<p>Don&rsquo;t worry about the &lsquo;lastThreePages&rsquo; computed property for now - I&rsquo;m adding the pagination system available in Zurb Foundation, and we&rsquo;ll use that property for some conditionals in the view to change how certain buttons are rendered depending on which page we&rsquo;re on.</p>
+
+<p>So, let&rsquo;s add that to our <code>app/templates/people.hbs</code> files and see what we get. In the template, below the original code for the table, we add new code for pagination buttons. Normally we might choose to separate this into a component, but for time&rsquo;s sake I&rsquo;ve just included it in the template itself. The code is a bit lengthy and not particularly important to what this blog is about. If you&rsquo;d like to see it, it&rsquo;s in <a href="https://github.com/sareid/query-params/blob/master/app/templates/people.hbs">the repository here,</a> but I am also certain there are more elegant ways of doing it.</p>
+
+<p>With that all in place, we get something that looks like this:</p>
+
+<div style='position:relative;padding-bottom:calc(100% / 1.60)'><iframe src='https://gfycat.com/ifr/MarvelousMarvelousDogwoodclubgall' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
+
+
+<p>As the buttons on the bottom are pressed, the &lsquo;nextPage&rsquo; function is triggered, updating the &lsquo;page&rsquo; query param and making a new request to our Rails API (again, because we set the <code>refreshModel</code> property to &lsquo;true&rsquo;. The person controller in our API takes in the page parameter in the request, queries the database and serves the appropriate data and metadata back to our Ember app. The controller takes the data for the model, extracts the metadata, and then passes it to update the view.</p>
+
+<h3>Conclusions</h3>
+
+<p>So that&rsquo;s a first look at query params, metadata and pagination in Ember! Don&rsquo;t forget, we can use queryParams to serialise a number of different application states into our URL beyond mere pages. We have a <code>filter</code> query param that looks at a particular property and only returns instances from the database where a condition is met. In this example, maybe we filter to find friends who are a particular age. Or we could sort according to certain categories - maybe I&rsquo;d like to see my friends ranked according to how long I&rsquo;ve known them. We can accomplish all this and more with query params.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating page-specific JavaScript and CSS in Rails]]></title>
     <link href="http://sareid.github.io/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/"/>
     <updated>2016-04-28T11:36:24-04:00</updated>
     <id>http://sareid.github.io/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails</id>
@@ -106,7 +450,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Bootstrap: Making Front-end Development Easier Since 1842 (Note to Self: Check Dates)]]></title>
+    <title type="html"><![CDATA[Bootstrap: Making front-end development easier since 1842 (note to self: check dates)]]></title>
     <link href="http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/"/>
     <updated>2016-01-12T07:41:35-05:00</updated>
     <id>http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder</id>

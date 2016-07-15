@@ -9,7 +9,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Javascript - andrew does his best</title>
+  <title>Category: javascript - andrew does his best</title>
   <meta name="author" content="Andrew Reid">
 
   
@@ -57,7 +57,52 @@
         <div class="row">
           <div class="col-md-offset-3 col-md-6">
             <article>
-  <h2><a href="/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/">Creating Page-specific JavaScript and CSS in Rails</a></h2>
+  <h2><a href="/blog/2016/07/13/using-query-params-in-ember-dot-js/">Query Params, Metadata and Pagination in Ember.js</a></h2>
+  
+  <p>
+    <p>A little earlier this year, I was reading an organisation&rsquo;s style guide for working with Ember.js, when I encountered reference to the use of &lsquo;query params&rsquo; in a controller. At the time, still relatively new to Ember, I had no idea what this meant. In the intervening time, though I&rsquo;ve learned a lot. Basically, query params allow for certain application states to be serialised into the URL that wouldn&rsquo;t be otherwise possible through the regular use of routes. In this blog post, I&rsquo;m going to explain the role of query params, and how they can be used in your Ember app to provide some neat functionality. I&rsquo;ll be using a sample Ember.js front-end app, with a Rails API on the back-end.</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2016-07-13T14:09:31-04:00" pubdate data-updated="true"></time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ember-dot-js/'>ember.js</a>, <a class='category' href='/blog/categories/front-end/'>front-end</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+  </span>
+
+  
+    <a class="full-article-link pull-right" rel="full-article" href="/blog/2016/07/13/using-query-params-in-ember-dot-js/">Read on &rarr;</a>
+  
+</article>
+
+          </div>
+        </div>
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/">Creating page-specific JavaScript and CSS in Rails</a></h2>
   
   <p>
     <p>The <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails Asset Pipeline</a> is a really great tool that improves performance by compressing and minifying assets, as well as compiling JS and CSS assets written in other languages, like CoffeeScript and SASS. When compiled, the files in your <code>app/assets/javascripts/</code> folder get processed and minified into a single <code>application.js</code> file. In many cases, this is great - all of the views in your app have access to this file at all times, and it cuts down on the number of server requests made by the browser. But what happens if you want to dynamicaly scope JavaScript functions to specific pages in your app, like a function that only fires when an object view page is loaded?</p>

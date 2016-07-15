@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Rails | andrew does his best]]></title>
+  <title><![CDATA[Category: rails | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-04-28T16:14:00-04:00</updated>
+  <updated>2016-07-15T19:18:15-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Creating Page-specific JavaScript and CSS in Rails]]></title>
+    <title type="html"><![CDATA[Creating page-specific JavaScript and CSS in Rails]]></title>
     <link href="http://sareid.github.io/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/"/>
     <updated>2016-04-28T11:36:24-04:00</updated>
     <id>http://sareid.github.io/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails</id>
@@ -106,7 +106,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[The People vs Turbolinks]]></title>
+    <title type="html"><![CDATA[The People v Turbolinks]]></title>
     <link href="http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks/"/>
     <updated>2016-01-27T07:40:57-05:00</updated>
     <id>http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks</id>

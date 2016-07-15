@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Flatiron&nbsp;school | andrew does his best]]></title>
+  <title><![CDATA[Category: flatiron&nbsp;school | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-04-28T16:14:00-04:00</updated>
+  <updated>2016-07-15T19:18:15-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[The People vs Turbolinks]]></title>
+    <title type="html"><![CDATA[The People v Turbolinks]]></title>
     <link href="http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks/"/>
     <updated>2016-01-27T07:40:57-05:00</updated>
     <id>http://sareid.github.io/blog/2016/01/27/the-people-vs-turbolinks</id>
@@ -119,7 +119,7 @@ Simply put, it&rsquo;s a function that is triggered once your document is ready 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Bootstrap: Making Front-end Development Easier Since 1842 (Note to Self: Check Dates)]]></title>
+    <title type="html"><![CDATA[Bootstrap: Making front-end development easier since 1842 (note to self: check dates)]]></title>
     <link href="http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/"/>
     <updated>2016-01-12T07:41:35-05:00</updated>
     <id>http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder</id>
@@ -221,7 +221,7 @@ gem 'autoprefixer-rails'
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[PSTORE and Me: An Uneasy Alliance]]></title>
+    <title type="html"><![CDATA[PSTORE and me: An uneasy alliance]]></title>
     <link href="http://sareid.github.io/blog/2015/12/18/pstore-and-me-an-uneasy-alliance/"/>
     <updated>2015-12-18T10:38:21-05:00</updated>
     <id>http://sareid.github.io/blog/2015/12/18/pstore-and-me-an-uneasy-alliance</id>
