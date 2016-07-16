@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-07-15T19:23:14-04:00</updated>
+  <updated>2016-07-15T22:51:49-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -30,15 +30,13 @@
 
 <p>To test out query params, I built an Ember.js app that displays a list of friends with a number of properties (like name, email, phone number, age, etc). The data is served as JSON from a Rails API.</p>
 
-<p>The finished code can be found here:
-<a href="https://github.com/sareid/query-params">Ember front-end</a>
-<a href="https://github.com/sareid/query-params-api">Rails API</a></p>
+<p>The finished code can be found here: <a href="https://github.com/sareid/query-params">Ember front-end</a> &amp; <a href="https://github.com/sareid/query-params-api">Rails API</a></p>
 
 <h3>Setting up the Rails API and adding a root node</h3>
 
-<p>I&rsquo;m not going to go into all the steps of setting up a Rails API. Sophie DeBenedetto has a great step-by-step guide for this on her blog <a href="http://www.thegreatcodeadventure.com/building-a-super-simple-rails-api/">here</a>. This app has a single model, Person, and a single route <code>people</code>. You can take a look at the migration files to see the properties of the model.</p>
+<p>I&rsquo;m not going to go into all the steps of setting up a Rails API. Sophie DeBenedetto has a great step-by-step guide for this on her blog <a href="http://www.thegreatcodeadventure.com/building-a-super-simple-rails-api/">here</a>. This app has a single model, Person, and a single route <code>people</code>. You can take a look at the <a href="https://github.com/sareid/query-params-api/blob/master/query-params-api/db/migrate/20160712181102_create_person.rb">migration file</a> to see the properties of the model.</p>
 
-<p>To populate the database with entries, I wrote a <code>seed.rb</code> file that makes 400 instances of people using the <a href="https://github.com/stympy/faker">Faker game</a> which automatically generates content for different types of properties, like this:
+<p>To populate the database with entries, I wrote a <code>seed.rb</code> file that makes 400 instances of people using the <a href="https://github.com/stympy/faker">Faker gem</a> which automatically generates content for different types of properties, like this:
 <code>ruby
 400.times do
   person = Person.create(
@@ -77,7 +75,7 @@ friends_since: "2007-07-30T21:08:20.000Z"
 }
 </code></pre>
 
-<p>For the model hook in Ember to function properly, we need a root node with the name of model. To do so, we need to instruct Rails to use the <code>JSON</code> adapter. In the <code>config/intializers</code> director, I included a <code>serializer.rb</code> file with the following line of code:</p>
+<p>For the model hook in Ember to function properly, we need a root node with the name of model. To do so, we need to instruct Rails to use the <code>JSON</code> adapter. In the <code>config/intializers</code> directory, I included a <code>serializer.rb</code> file with the following line of code:</p>
 
 <pre><code class="ruby">ActiveModelSerializers.config.adapter = :json
 </code></pre>
@@ -114,7 +112,7 @@ friends_since: "2007-07-30T21:08:20.000Z"
 
 <p>To start, generate a new Ember app with the <code>ember new</code> command (for more, <a href="https://guides.emberjs.com/v2.6.0/getting-started/quick-start/#toc_create-a-new-application">see the Ember docs</a>).</p>
 
-<p>In this project, I just wanted to build an index page for all the people in the database. As such, we need to set up the route, model, route handler, template and controller for &lsquo;people&rsquo; (fun note: the Inflector in Rails is smart enough to know that &lsquo;people&rsquo; is the plural of &lsquo;person&rsquo;). Run <code>ember g resource people</code>. This creates three important files: <code>app/models/person.js</code>, <code>app/routes/donkey.js</code>, and <code>app/templates/people.hbs</code> (as well as a file for tests). It also adds the appropriate route - if you look in your <code>app/router.js</code> file you&rsquo;ll see the following:</p>
+<p>In this project, I just wanted to build an index page for all the people in the database. As such, we need to set up the route, model, route handler, template and controller for &lsquo;people&rsquo; (fun note: the Inflector in Rails is smart enough to know that &lsquo;people&rsquo; is the plural of &lsquo;person&rsquo;). Run <code>ember g resource people</code>. This creates three important files: <code>app/models/person.js</code>, <code>app/routes/people.js</code>, and <code>app/templates/people.hbs</code> (as well as a file for tests). It also adds the appropriate route - if you look in your <code>app/router.js</code> file you&rsquo;ll see the following:</p>
 
 <pre><code class="javascript">import Ember from 'ember';
 import config from './config/environment';
@@ -161,9 +159,9 @@ export default Ember.Route.extend({
 });
 </code></pre>
 
-<p>For the moment, we don&rsquo;t need to add anything new to our controller, but we do need to fill out the <code>app/templates/people.hbs</code> template a bit. To make our front-end stylign a little simpler, I&rsquo;m using the <a href="http://foundation.zurb.com/">Zurb Foundation</a> responsive framework. Don&rsquo;t worry if you don&rsquo;t understand how it works. I installed into my Ember app using the <a href="https://github.com/nadavshatz/ember-cli-foundation-sass">Ember Cli Foundation Sass addon</a>.</p>
+<p>For the moment, we don&rsquo;t need to add anything new to our controller, but we do need to fill out the <code>app/templates/people.hbs</code> template a bit. To make our front-end styling a little simpler, I&rsquo;m using the <a href="http://foundation.zurb.com/">Zurb Foundation</a> responsive framework. Don&rsquo;t worry if you don&rsquo;t understand how it works. I installed into my Ember app using the <a href="https://github.com/nadavshatz/ember-cli-foundation-sass">Ember Cli Foundation Sass addon</a>.</p>
 
-<p>In the template, I build a table of all the people in our database using the <code></code> helper. It looks like this (ignore the spaces between the curly braces):</p>
+<p>In the template, I build a table of all the people in our database using the <code>{ {#each model as |person|} }</code> helper. It looks like this (ignore the spaces between the curly braces):</p>
 
 <p>```</p>
 
@@ -203,7 +201,7 @@ If we navigate to</code><a href="http://localhost:4200/people">http://localhost:
 
 <h3>Paginating JSON and serving metadata</h3>
 
-<p>When a GET request is sent to the <code>api/v1/people</code> route of our API, the back-end is current serving all 400 entries back as a response. We need a way to both break the JSON being served into smaller segments, but also to serve information about the data itself (metadata). In the case of pagination, this metadata will include information like how many chunks or &lsquo;pages&rsquo; the database has been segmented into, as well as the current page being served.</p>
+<p>When a GET request is sent to the <code>api/v1/people</code> route of our API, the back-end is currently serving all 400 entries back as a response. We need a way to both break the JSON being served into smaller segments, but also to serve information about the data itself (metadata). In the case of pagination, this metadata will include information like how many chunks or &lsquo;pages&rsquo; the database has been segmented into, as well as the current page being served.</p>
 
 <p>The simplest way to incorpate pagination into your API is through the <a href="https://github.com/amatsuda/kaminari">Kaminari gem</a>. There are other options out there, but the comments I&rsquo;ve seen on Stack Overflow and elsewhere seem to favour this gem. Install it by including <code>gem 'kaminari'</code> in your Gemfile, and running <code>$ bundle</code>. With this done, we need to make some changes to our People Controller, as follows:</p>
 
@@ -349,7 +347,7 @@ export default Ember.Controller.extend({
 <div style='position:relative;padding-bottom:calc(100% / 1.60)'><iframe src='https://gfycat.com/ifr/MarvelousMarvelousDogwoodclubgall' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
 
 
-<p>As the buttons on the bottom are pressed, the &lsquo;nextPage&rsquo; function is triggered, updating the &lsquo;page&rsquo; query param and making a new request to our Rails API (again, because we set the <code>refreshModel</code> property to &lsquo;true&rsquo;. The person controller in our API takes in the page parameter in the request, queries the database and serves the appropriate data and metadata back to our Ember app. The controller takes the data for the model, extracts the metadata, and then passes it to update the view.</p>
+<p>As the buttons on the bottom are pressed, the &lsquo;nextPage&rsquo; function is triggered, updating the &lsquo;page&rsquo; query param and making a new request to our Rails API (again, because we set the <code>refreshModel</code> property to &lsquo;true&rsquo;). The person controller in our API takes in the page parameter in the request, queries the database and serves the appropriate data and metadata back to our Ember app. The controller takes the data for the model, extracts the metadata, and then passes it to update the view.</p>
 
 <h3>Conclusions</h3>
 
