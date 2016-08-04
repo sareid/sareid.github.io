@@ -4,7 +4,7 @@
   <title><![CDATA[Category: front-end | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/front-end/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-08-03T21:46:45-04:00</updated>
+  <updated>2016-08-03T21:48:11-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -18,9 +18,9 @@
     <link href="http://sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment/"/>
     <updated>2016-08-03T13:04:22-04:00</updated>
     <id>http://sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment</id>
-    <content type="html"><![CDATA[<p>This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 that I was heretofore unfamiliar with: destructuring assignment.</p>
+    <content type="html"><![CDATA[<p>This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 for declaring and assigning variables that I was heretofore unfamiliar with: destructuring assignment.</p>
 
-<p>Recently, while reading a <a href="https://emberway.io/ember-js-and-html5-drag-and-drop-fa5dfe478a9a#.4fqjphkvm">blog post</a> on implementing drag and drop functionality in Ember.js with HTML5, I noticed a method of variable declaration in JavaScript that was new to me. In the code for a specific component, I saw this:
+<p>Recently, while reading a <a href="https://emberway.io/ember-js-and-html5-drag-and-drop-fa5dfe478a9a#.4fqjphkvm">blog post</a> on implementing drag and drop functionality in Ember.js with HTML5, I noticed a method of variable declaration in JavaScript that was new to me. In the code for a specific component, I saw this:<!--more-->
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
