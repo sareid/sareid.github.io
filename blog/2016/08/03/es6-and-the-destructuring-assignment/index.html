@@ -9,12 +9,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>andrew does his best</title>
+  <title>ES2015 and Destructuring Assignment - andrew does his best</title>
   <meta name="author" content="Andrew Reid">
 
   
-  <meta name="description" content="andrew does his best
-An environmentalist meets code about me I'm Andrew, a Canadian who spent the past decade in environmental research. Now I'm a &hellip;">
+  <meta name="description" content="ES2015 and Destructuring Assignment written in ember.js, front-end, javascript This blog is a simple one - I just wanted to write a bit about a neat &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +22,7 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://sareid.github.io">
+  <link rel="canonical" href="http://sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="andrew does his best" type="application/atom+xml">
@@ -42,55 +41,40 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
       <img src="/images/home.png"/>
     </a>
 
-    <div class="home-page">
-  <div class="hero">
-    <h1>andrew does his best</h1>
-<p>An environmentalist meets code</p>
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>ES2015 and Destructuring Assignment</h1>
+        <div class="meta">
+          written 
 
-  </div>
 
-  <div class="home-field">
-    <div class="home-landing her-row">
-      <div class="container">
-        <div class="row">
-          <div id="about-me" class="col-md-offset-3 col-md-6">
-  <h4>about me</h4>
-  <p>I'm Andrew, a Canadian who spent the past decade in environmental research. Now I'm a web developer, excited to make a difference through code. This blog chronicles my chronicles.</p>
-  <div class="social-icon-list">
-  	
-    <a title="Twitter" href="https://twitter.com/doeshisbest"><img src="/images/glyphicons_social_31_twitter.png"/></a>
-    
-    
-    <a title="GitHub" href="https://github.com/sareid"><img src="/images/glyphicons_social_21_github.png"/></a>
-    
-    
-    
-  </div>
-</div>
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2016-08-03T13:04:22-04:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ember-dot-js/'>ember.js</a>, <a class='category' href='/blog/categories/front-end/'>front-end</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
 
         </div>
-      </div>
-    </div>
-
-    <div class="article-list">
-      <div class="container">
-        
-          
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <article>
-  <h2><a href="/blog/2016/08/03/es6-and-the-destructuring-assignment/">ES2015 and Destructuring Assignment</a></h2>
-  
-  <p>
-    <p>This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 that I was heretofore unfamiliar with: destructuring assignment.</p>
-
-
-
+        <p>This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 that I was heretofore unfamiliar with: destructuring assignment.</p>
 
 <p>Recently, while reading a <a href="https://emberway.io/ember-js-and-html5-drag-and-drop-fa5dfe478a9a#.4fqjphkvm">blog post</a> on implementing drag and drop functionality in Ember.js with HTML5, I noticed a method of variable declaration in JavaScript that was new to me. In the code for a specific component, I saw this:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -101,27 +85,13 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>The first line is one I&rsquo;ve seen a lot - it assigns the actual Ember.js library in the form of an object to an &lsquo;Ember&rsquo; variable, giving us easy access to it in the subsequent code. This object consists of a large number of properties, each of which is a method from the Ember.js library. The next line was a bit more puzzling to me. Why was the variable name wrapped in curly braces like that?</p>
-
-
-
 
 <p>So, I did what <a href="http://www.theallium.com/engineering/computer-programming-to-be-officially-renamed-googling-stackoverflow/">programmers do best</a>, and soon found myself on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">relevant part</a> of MDN&rsquo;s JavaScript section. Here&rsquo;s what I learned.</p>
 
-
-
-
 <h3>Destructuring assignment</h3>
 
-
-
-
 <p>A new feature in <a href="https://babeljs.io/docs/learn-es2015/">ES2015</a>, destructuring assignment syntax allows us to &ldquo;extract data from arrays or objects into distinct variables&rdquo;. What this means, is that given an array or object, we can declare a variable and immediately assign it specific elements or properties as a value. Here&rsquo;s a simple example (we&rsquo;ll start with arrays and then move to objects):</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -134,12 +104,7 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>As you can see, using destructuring assignment in line 2, we declare <code>first</code> and <code>second</code> variables, and assign them values corresponding to the same elements in the <code>array</code> variable. In this case, the first two elements are used, and the rest are automatically skipped. But we could skip the first element too, like this:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -152,12 +117,7 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>We can also assign default values, in case the data extracted from an array is undefined, like the following:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -172,17 +132,9 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <h3>Object destructuring</h3>
 
-
-
-
 <p>Just like with the examples of arrays above, we can use destructuring assignment on objects too, assigning specific object properties as values to the newly declared variables. Take the following example, where the <code>outfit()</code> function returns an object.</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -197,12 +149,7 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>As was the case with elements of arrays, we use destructuring assignment to assign a specific property of an object as the variable&rsquo;s value - in this case, picking out the <code>pants</code> propety so the newly declared variable has a value of the string of &lsquo;blue&rsquo;. We can also use this assign properties to variables with different names, using the following syntax:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -217,22 +164,11 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>Here, the new <code>trousers</code> variable has the same value as the <code>pants</code> property.</p>
-
-
-
 
 <h3>Back to the initial example</h3>
 
-
-
-
 <p>Okay, so now that we understand destructuring assignment a little better, let&rsquo;s look at that original bit of code from the blog above:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -243,12 +179,7 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>So, clearly we&rsquo;re looking for a property called &lsquo;set&rsquo; that exists in the variable <code>Ember</code>. If you recall from above, the first line of code created the variable <code>Ember</code>, which is an object whose properties are the set of functions comprising the Ember.js library. Looking into the Ember.js library, we find a place where a <code>set</code> function is defined, and above it the following note:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -271,17 +202,9 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p> By using destructuring assignment, we assigned the <code>set</code> variable the value of the <code>set</code> function property from this object, which (we can see from the description) lets us change the values on an object in a way that will trigger any observers, listeners, or computed properties, meaning that changes will be reflected in the view. So, basically it&rsquo;s equivalent of calling <code>Ember.set()</code>.</p>
 
-
-
-
 <p>Why do this? Afterall, it&rsquo;s not much more effort to simply invoke the function with <code>Ember.set()</code>. There are a couple of reasons to use destructuring assignment in general, but in this case I think the answer lies in ensuring the code is resilient. Take a look at the rest of the code from the controller:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -330,12 +253,7 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>As you can see, <code>set</code> is called in three different locations. If the <code>set</code> function in the Ember.js library were renamed or deprecated at any point, then code in this example might break. If we were calling <code>Ember.set()</code> instead of using destructuring assignments and then calling <code>set()</code> each time, we would then have to fix each instance of <code>Ember.set()</code>. As it stands, we would only have to change the initial variable assignment. Let&rsquo;s say the <code>set</code> function in the Ember.js library was renamed <code>assign</code>, we could simply change things to:</p>
-
-
-
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -346,252 +264,33 @@ An environmentalist meets code about me I'm Andrew, a Canadian who spent the pas
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-
 <p>As we learned above, this extracts the hypothetical <code>assign</code> function from the Ember.js library, and assigns it to a new <code>set</code> variable. The existing <code>set</code> variables would still work through the rest of the code, saving us having to fix each case.</p>
 
-
-
-
 <h3>Conclusion</h3>
-
-
-
 
 <p>All in all, destructuring assignments is a cool bit of syntactic sugar that can help make your code simpler and more resilient. In particular, I see use cases with nested arrays, or when you want to declare a variable with a selection of some of object&rsquo;s properties where this could save several lines of code by not having to declare each variable individually. I&rsquo;ve only covered part of the functionality here, so to learn more see the full MDN documentation <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">here</a>.</p>
 
 
-  </p>
-  <span class="meta">
-    written 
+        <hr class="divider-short"/>
 
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2016-08-03T13:04:22-04:00" pubdate data-updated="true"></time>
-    
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ember-dot-js/'>ember.js</a>, <a class='category' href='/blog/categories/front-end/'>front-end</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
-  
-</span>
-
-
-  </span>
-
-  
-</article>
-
-            </div>
-          </div>
-        
-          
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <article>
-  <h2><a href="/blog/2016/07/13/using-query-params-in-ember-dot-js/">Query Params, Metadata and Pagination in Ember.js</a></h2>
-  
-  <p>
-    <p><p>A little earlier this year, I was reading an organisation&rsquo;s style guide for working with Ember.js, when I encountered reference to the use of &lsquo;query params&rsquo; in a controller. At the time, still relatively new to Ember, I had no idea what this meant. In the intervening time, though I&rsquo;ve learned a lot. Basically, query params allow for certain application states to be serialised into the URL that wouldn&rsquo;t be otherwise possible through the regular use of routes. In this blog post, I&rsquo;m going to explain the role of query params, and how they can be used in your Ember app to provide some neat functionality. I&rsquo;ll be using a sample Ember.js front-end app, with a Rails API on the back-end.</p>
-
-  </p>
-  <span class="meta">
-    written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2016-07-13T14:09:31-04:00" pubdate data-updated="true"></time>
-    
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ember-dot-js/'>ember.js</a>, <a class='category' href='/blog/categories/front-end/'>front-end</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
-  
-</span>
-
-
-  </span>
-
-  
-    <a class="full-article-link pull-right" rel="full-article" href="/blog/2016/07/13/using-query-params-in-ember-dot-js/">Read on &rarr;</a>
-  
-</article>
-
-            </div>
-          </div>
-        
-          
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <article>
-  <h2><a href="/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/">Creating page-specific JavaScript and CSS in Rails</a></h2>
-  
-  <p>
-    <p><p>The <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails Asset Pipeline</a> is a really great tool that improves performance by compressing and minifying assets, as well as compiling JS and CSS assets written in other languages, like CoffeeScript and SASS. When compiled, the files in your <code>app/assets/javascripts/</code> folder get processed and minified into a single <code>application.js</code> file. In many cases, this is great - all of the views in your app have access to this file at all times, and it cuts down on the number of server requests made by the browser. But what happens if you want to dynamicaly scope JavaScript functions to specific pages in your app, like a function that only fires when an object view page is loaded?</p>
-
-  </p>
-  <span class="meta">
-    written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2016-04-28T11:36:24-04:00" pubdate data-updated="true"></time>
-    
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/css/'>css</a>, <a class='category' href='/blog/categories/front-end/'>front-end</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
-  
-</span>
-
-
-  </span>
-
-  
-    <a class="full-article-link pull-right" rel="full-article" href="/blog/2016/04/28/creating-page-specific-javascript-and-css-in-rails/">Read on &rarr;</a>
-  
-</article>
-
-            </div>
-          </div>
-        
-          
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <article>
-  <h2><a href="/blog/2016/01/27/the-people-vs-turbolinks/">The People v Turbolinks</a></h2>
-  
-  <p>
-    <p><p>This week, as part of the Flatiron Students Present series I gave a presentation on the new features coming in <a href="http://weblog.rubyonrails.org/2015/12/18/Rails-5-0-beta1/">Rails 5.</a>. There&rsquo;s some really intriguing stuff, highlighted by the Railsified websocket goodness of <a href="https://github.com/rails/rails/tree/master/actioncable">Action Cable</a>. Nestled in there is the news of <s>Turbolinks 3</s> Turbolinks 5, the latest version of a Rails feature I was totally unfamiliar with.</p>
-
-  </p>
-  <span class="meta">
-    written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2016-01-27T07:40:57-05:00" pubdate data-updated="true"></time>
-    
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/flatiron-school/'>flatiron&nbsp;school</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
-  
-</span>
-
-
-  </span>
-
-  
-    <a class="full-article-link pull-right" rel="full-article" href="/blog/2016/01/27/the-people-vs-turbolinks/">Read on &rarr;</a>
-  
-</article>
-
-            </div>
-          </div>
-        
-          
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <article>
-  <h2><a href="/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/">Bootstrap: Making front-end development easier since 1842 (note to self: check dates)</a></h2>
-  
-  <p>
-    <h3>Front-end frameworks</h3>
-
-
-
-
-<p>Throughout the first six weeks I&rsquo;ve spent in the Flatiron School&rsquo;s Web Development immersive course, we&rsquo;ve largely stuck to the dark and bewildering world of the back-end, wading waist deep into the nitty-gritty muck and grime of SQL databases and Model View Controller designs. There&rsquo;s been a lot of plain code on plain screens.</p>
-
-
-
-
-<p><p>But you know what? Sometimes it&rsquo;s nice to feel pretty. So today I&rsquo;m going to talk about front-end frameworks.</p>
-
-  </p>
-  <span class="meta">
-    written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2016-01-12T07:41:35-05:00" pubdate data-updated="true"></time>
-    
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/flatiron-school/'>flatiron&nbsp;school</a>, <a class='category' href='/blog/categories/front-end/'>front-end</a>
-  
-</span>
-
-
-  </span>
-
-  
-    <a class="full-article-link pull-right" rel="full-article" href="/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/">Read on &rarr;</a>
-  
-</article>
-
-            </div>
-          </div>
         
       </div>
     </div>
+  </div>
+</article>
 
-    <hr class="divider-short"/>
+<hr class="divider-short"/>
 
-    <div class="archive-link">
-      <h3><a href="/posts/">All Posts</a></h3>
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2016/07/13/using-query-params-in-ember-dot-js/" title="Previous Post: Query Params, Metadata and Pagination in Ember.js">&laquo; Previous: Query Params, Metadata and Pagination in Ember.js</a>
+        
+
+        
+      </div>
     </div>
   </div>
 </div>

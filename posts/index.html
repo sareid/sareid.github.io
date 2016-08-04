@@ -13,7 +13,7 @@
   <meta name="author" content="Andrew Reid">
 
   
-  <meta name="description" content="All Posts Query Params, Metadata and Pagination in Ember.js A little earlier this year, I was reading an organisation&rsquo;s style guide for &hellip;">
+  <meta name="description" content="All Posts ES2015 and Destructuring Assignment This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 that I was &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -52,6 +52,326 @@
 
   <div class="article-list">
     <div class="container">
+      
+      
+      <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+          <article>
+  <h2><a href="/blog/2016/08/03/es6-and-the-destructuring-assignment/">ES2015 and Destructuring Assignment</a></h2>
+  
+  <p>
+    <p>This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 that I was heretofore unfamiliar with: destructuring assignment.</p>
+
+
+
+
+<p>Recently, while reading a <a href="https://emberway.io/ember-js-and-html5-drag-and-drop-fa5dfe478a9a#.4fqjphkvm">blog post</a> on implementing drag and drop functionality in Ember.js with HTML5, I noticed a method of variable declaration in JavaScript that was new to me. In the code for a specific component, I saw this:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s1">&#39;ember&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="p">{</span> <span class="nx">set</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>The first line is one I&rsquo;ve seen a lot - it assigns the actual Ember.js library in the form of an object to an &lsquo;Ember&rsquo; variable, giving us easy access to it in the subsequent code. This object consists of a large number of properties, each of which is a method from the Ember.js library. The next line was a bit more puzzling to me. Why was the variable name wrapped in curly braces like that?</p>
+
+
+
+
+<p>So, I did what <a href="http://www.theallium.com/engineering/computer-programming-to-be-officially-renamed-googling-stackoverflow/">programmers do best</a>, and soon found myself on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">relevant part</a> of MDN&rsquo;s JavaScript section. Here&rsquo;s what I learned.</p>
+
+
+
+
+<h3>Destructuring assignment</h3>
+
+
+
+
+<p>A new feature in <a href="https://babeljs.io/docs/learn-es2015/">ES2015</a>, destructuring assignment syntax allows us to &ldquo;extract data from arrays or objects into distinct variables&rdquo;. What this means, is that given an array or object, we can declare a variable and immediately assign it specific elements or properties as a value. Here&rsquo;s a simple example (we&rsquo;ll start with arrays and then move to objects):</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="kd">var</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">]</span> <span class="o">=</span> <span class="nx">array</span><span class="p">;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// 1</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>As you can see, using destructuring assignment in line 2, we declare <code>first</code> and <code>second</code> variables, and assign them values corresponding to the same elements in the <code>array</code> variable. In this case, the first two elements are used, and the rest are automatically skipped. But we could skip the first element too, like this:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="kd">var</span> <span class="p">[,</span> <span class="nx">second</span><span class="p">]</span> <span class="o">=</span> <span class="nx">array</span><span class="p">;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// We get an error, telling us that &#39;first&#39; is undefined.</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>We can also assign default values, in case the data extracted from an array is undefined, like the following:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="nx">first</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="nx">second</span><span class="o">=</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// 1</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// 7</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>Object destructuring</h3>
+
+
+
+
+<p>Just like with the examples of arrays above, we can use destructuring assignment on objects too, assigning specific object properties as values to the newly declared variables. Take the following example, where the <code>outfit()</code> function returns an object.</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">outfit</span><span class="p">(){</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span><span class="nx">pants</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="nx">shirt</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="nx">hat</span><span class="o">:</span> <span class="s2">&quot;yello&quot;</span><span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="p">{</span><span class="nx">pants</span><span class="p">}</span> <span class="o">=</span> <span class="nx">outfit</span><span class="p">();</span> <span class="c1">// pants = &quot;blue&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>As was the case with elements of arrays, we use destructuring assignment to assign a specific property of an object as the variable&rsquo;s value - in this case, picking out the <code>pants</code> propety so the newly declared variable has a value of the string of &lsquo;blue&rsquo;. We can also use this assign properties to variables with different names, using the following syntax:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">outfit</span><span class="p">(){</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span><span class="nx">pants</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="nx">shirt</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="nx">hat</span><span class="o">:</span> <span class="s2">&quot;yello&quot;</span><span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="p">{</span><span class="nx">pants</span><span class="o">:</span> <span class="nx">trousers</span><span class="p">}</span> <span class="o">=</span> <span class="nx">outfit</span><span class="p">();</span> <span class="c1">// trousers = &quot;blue&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>Here, the new <code>trousers</code> variable has the same value as the <code>pants</code> property.</p>
+
+
+
+
+<h3>Back to the initial example</h3>
+
+
+
+
+<p>Okay, so now that we understand destructuring assignment a little better, let&rsquo;s look at that original bit of code from the blog above:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s1">&#39;ember&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="p">{</span> <span class="nx">set</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>So, clearly we&rsquo;re looking for a property called &lsquo;set&rsquo; that exists in the variable <code>Ember</code>. If you recall from above, the first line of code created the variable <code>Ember</code>, which is an object whose properties are the set of functions comprising the Ember.js library. Looking into the Ember.js library, we find a place where a <code>set</code> function is defined, and above it the following note:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="cm">/**</span>
+</span><span class='line'><span class="cm">    Sets the value of a property on an object, respecting computed properties</span>
+</span><span class='line'><span class="cm">    and notifying observers and other listeners of the change. If the</span>
+</span><span class='line'><span class="cm">    property is not defined but the object implements the `setUnknownProperty`</span>
+</span><span class='line'><span class="cm">    method then that will be invoked as well.</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">    ...</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">  */</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p> By using destructuring assignment, we assigned the <code>set</code> variable the value of the <code>set</code> function property from this object, which (we can see from the description) lets us change the values on an object in a way that will trigger any observers, listeners, or computed properties, meaning that changes will be reflected in the view. So, basically it&rsquo;s equivalent of calling <code>Ember.set()</code>.</p>
+
+
+
+
+<p>Why do this? Afterall, it&rsquo;s not much more effort to simply invoke the function with <code>Ember.set()</code>. There are a couple of reasons to use destructuring assignment in general, but in this case I think the answer lies in ensuring the code is resilient. Take a look at the rest of the code from the controller:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">export</span> <span class="k">default</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Component</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'><span class="nx">classNames</span>        <span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;draggableDropzone&#39;</span> <span class="p">],</span>
+</span><span class='line'><span class="nx">classNameBindings</span> <span class="o">:</span> <span class="p">[</span> <span class="s1">&#39;dragClass&#39;</span> <span class="p">],</span>
+</span><span class='line'><span class="nx">dragClass</span>         <span class="o">:</span> <span class="s1">&#39;deactivated&#39;</span><span class="p">,</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">dragLeave</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;dragClass&#39;</span><span class="p">,</span> <span class="s1">&#39;deactivated&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">dragOver</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;dragClass&#39;</span><span class="p">,</span> <span class="s1">&#39;activated&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">drop</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dataTransfer</span><span class="p">.</span><span class="nx">getData</span><span class="p">(</span><span class="s1">&#39;text/data&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sendAction</span><span class="p">(</span><span class="s1">&#39;dropped&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;dragClass&#39;</span><span class="p">,</span> <span class="s1">&#39;deactivated&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>As you can see, <code>set</code> is called in three different locations. If the <code>set</code> function in the Ember.js library were renamed or deprecated at any point, then code in this example might break. If we were calling <code>Ember.set()</code> instead of using destructuring assignments and then calling <code>set()</code> each time, we would then have to fix each instance of <code>Ember.set()</code>. As it stands, we would only have to change the initial variable assignment. Let&rsquo;s say the <code>set</code> function in the Ember.js library was renamed <code>assign</code>, we could simply change things to:</p>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s1">&#39;ember&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="p">{</span> <span class="nx">assign</span><span class="o">:</span> <span class="nx">set</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>As we learned above, this extracts the hypothetical <code>assign</code> function from the Ember.js library, and assigns it to a new <code>set</code> variable. The existing <code>set</code> variables would still work through the rest of the code, saving us having to fix each case.</p>
+
+
+
+
+<h3>Conclusion</h3>
+
+
+
+
+<p>All in all, destructuring assignments is a cool bit of syntactic sugar that can help make your code simpler and more resilient. In particular, I see use cases with nested arrays, or when you want to declare a variable with a selection of some of object&rsquo;s properties where this could save several lines of code by not having to declare each variable individually. I&rsquo;ve only covered part of the functionality here, so to learn more see the full MDN documentation <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">here</a>.</p>
+
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2016-08-03T13:04:22-04:00" pubdate data-updated="true"></time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ember-dot-js/'>ember.js</a>, <a class='category' href='/blog/categories/front-end/'>front-end</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+        </div>
+      </div>
       
       
       <div class="row">
