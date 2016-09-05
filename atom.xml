@@ -4,7 +4,7 @@
   <title><![CDATA[andrew does his best]]></title>
   <link href="http://sareid.github.io/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-08-03T21:48:11-04:00</updated>
+  <updated>2016-09-05T00:01:43-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -12,6 +12,300 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[5 Cool Ember Functions]]></title>
+    <link href="http://sareid.github.io/blog/2016/09/04/5-cool-ember-functions/"/>
+    <updated>2016-09-04T16:08:46-04:00</updated>
+    <id>http://sareid.github.io/blog/2016/09/04/5-cool-ember-functions</id>
+    <content type="html"><![CDATA[<p><strong>NOTE: As I&rsquo;ve found too many interesting methods, this will be a two parter, with five more methods to come.</strong></p>
+
+<p><img src="http://i.imgur.com/uRC8hZ1.jpg" alt="Tomster wearing sunglasses" /></p>
+
+<p>One of the biggest challenges of learning Ember (or any framework really) is familiarising yourself with all the tools it provides. Sometimes I&rsquo;ve needed a tool and not known that there&rsquo;s a specific function baked in that does what I need. Of course there are great resources out there like Stack Overflow and the excellent <a href="https://ember-community-slackin.herokuapp.com/">Ember community Slack channel</a>, but even then sometimes it&rsquo;s tricky to find what you&rsquo;re looking for.<!--more--></p>
+
+<p>I&rsquo;ve recently challenged myself to read through the <a href="http://emberjs.com/api/">Ember API documentation</a> in its entirety. It&rsquo;s rather long, and a little dry sometimes, but the best part so far has been discovering all sorts of random and neat functions baked into Ember that I didn&rsquo;t know about. Today I&rsquo;m going to share 5 of my favourites.</p>
+
+<p>I should start by noting that while I&rsquo;ve labeled this post as &lsquo;5 Cool Ember Functions&rsquo;, most of the functions I&rsquo;m looking at are actually methods - that is, they&rsquo;re functions stored as the properties of different objects in Ember.</p>
+
+<h2>1. loc()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.String.html#method_loc">Documentation</a></p>
+
+<p>This is a method of the <a href="http://emberjs.com/api/classes/Ember.String.html#method_loc">Ember.String namespace.</a> Most of the methods in this namespace are concerned with formatting (e.g, changing a string from camelCasing to kebab-casing). The <code>loc()</code> method, however formats the passed string, but first checks to see if it is a key in the <code>Ember.STRING</code> hash. One important use for this is in localisation (or, you know, localization). Take the following example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ember</span><span class="p">.</span><span class="nx">STRINGS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s1">&#39;_color&#39;</span><span class="o">:</span> <span class="s1">&#39;colour&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;_president&#39;</span><span class="o">:</span> <span class="s1">&#39;Prime Minister&#39;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Ember</span><span class="p">.</span><span class="nb">String</span><span class="p">.</span><span class="nx">loc</span><span class="p">(</span><span class="s2">&quot;_color&quot;</span><span class="p">);</span>  <span class="c1">// &#39;color&#39;;</span>
+</span><span class='line'><span class="nx">Ember</span><span class="p">.</span><span class="nb">String</span><span class="p">.</span><span class="nx">loc</span><span class="p">(</span><span class="s2">&quot;_president&quot;</span><span class="p">);</span>  <span class="c1">// &#39;Prime Minister&#39;;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>loc()</code> method can be called as a helper in a template too. Given the above bit of code, you could have a template like this:</p>
+
+<pre><code>&lt;h1&gt;
+  {{loc '_president'}}
+&lt;/h1&gt;
+</code></pre>
+
+<p>&hellip;would be translated to:</p>
+
+<pre><code>&lt;h1&gt;
+  Prime Minister
+&lt;/h1&gt;
+</code></pre>
+
+<h2>2. invoke()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.Array.html#method_invoke">Documentation</a></p>
+
+<p>This method is part of Ember&rsquo;s <a href="https://github.com/emberjs/ember.js/blob/v2.7.0/packages/ember-runtime/lib/mixins/enumerable.js#L682">Enumerable mixin</a>, which is inherited by the Ember.Array class, amongst others. In short, it invokes a named function on every element in the collection it is called upon (like an array), with the ability to take additional arguments. One neat use of it is for simplifying <code>foreach</code> iterations where a single function is called upon each element in the collection, like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">sampleArray</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">item</span><span class="p">.</span><span class="nx">sampleMethod</span><span class="p">(</span><span class="nx">argument</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instead, the invoke function can be used to provide a simpler piece of code, like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">sampleArray</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="s1">&#39;sampleMetod&#39;</span><span class="p">,</span> <span class="nx">argument</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Much simpler!</p>
+
+<h2>3. mapBy()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.Array.html#method_mapBy">Documentation</a></p>
+
+<p>If you&rsquo;ve used JavaScript (or, in fact, Ruby), you&rsquo;re most likely familiar with the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/map">Array.prototype.map()</a> function, which allows you to call a function on each item in an enumerable and return a new array with the resulting values. The <code>mapBy()</code> method is similar to this function, but it used when your array is composed of enumerables. It extracts the values of a specified property from those arrays and returns their value as a new array. Take the following example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">superman</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">superpower</span><span class="o">:</span> <span class="s2">&quot;Invicibility&quot;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">batman</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">.</span><span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">superpower</span><span class="o">:</span> <span class="s2">&quot;Money&quot;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">superheroes</span> <span class="o">=</span> <span class="p">[</span><span class="nx">superman</span><span class="p">,</span> <span class="nx">batman</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">superheroes</span><span class="p">.</span><span class="nx">mapBy</span><span class="p">(</span><span class="s1">&#39;superpower&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//=&gt;[&quot;Invicibility&quot;, &quot;Money&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. sendAction()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.Component.html#method_sendAction">Documentation</a></p>
+
+<p>This method belongs to the Ember.Component class, and calls an action that has been passed into a component from the corresponding controller or route handler. It allows you to translate events that happen within a component (like a click, hover, or scroll) into a specific action, while also passing alongs parameters obtained within the component.</p>
+
+<p>For example, I recently put together a <a href="https://dragndrop-recipe-book.herokuapp.com/recipes">recipe book app that demos HTML5 drag and drop</a> in Ember. As part of the demo, I built a <code>draggable-dropzone</code> component, where items could be dragged over and released, in this case associating an ingredient with a recipe. The JavaScript for this component is as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s1">&#39;ember&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="p">{</span> <span class="nx">set</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">export</span> <span class="k">default</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Component</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">classNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;draggableDropzone&#39;</span><span class="p">],</span>
+</span><span class='line'>  <span class="nx">classNameBindings</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;dragClass&#39;</span><span class="p">],</span>
+</span><span class='line'>  <span class="nx">dragClass</span><span class="o">:</span> <span class="s1">&#39;deactivated&#39;</span><span class="p">,</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">dragLeave</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;dragClass&#39;</span><span class="p">,</span> <span class="s1">&#39;deactivated&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">dragOver</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;dragClass&#39;</span><span class="p">,</span> <span class="s1">&#39;activated&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">drop</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dataTransfer</span><span class="p">.</span><span class="nx">getData</span><span class="p">(</span><span class="s1">&#39;text/data&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">sendAction</span><span class="p">(</span><span class="s1">&#39;dropped&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;recipeId&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;dragClass&#39;</span><span class="p">,</span><span class="s1">&#39;deactivated&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the <code>drop</code> function is triggered, by dragging an item and dropping it over the component, it assigns the data from the item being dragged (in this case the ID of an ingredient) to a <code>data</code> variable. It then invokes the <code>sendAction()</code> method, which triggers the <code>dropped</code> method, passing both the <code>data</code> variable, and the ID of the recipe currently being shown in the template.</p>
+
+<p>I&rsquo;ve included this component into the <code>app/templates/recipes/recipe.hbs</code> template using the following code:</p>
+
+<pre><code>{{#draggable-dropzone dropped="addIngredient" recipeId=model.recipe.id}}
+...some html
+{{/draggable-dropzone}}
+</code></pre>
+
+<p>You can see here that the <code>dropped</code> method, passed into the component, corresponds to the addIngredient action in the <code>app/routes/recipes/recipe.js</code> route, which looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s1">&#39;ember&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">export</span> <span class="k">default</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Route</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">model</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">params</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">RSVP</span><span class="p">.</span><span class="nx">hash</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">recipe</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">findRecord</span><span class="p">(</span><span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="nx">params</span><span class="p">.</span><span class="nx">recipe_id</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">ingredients</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">findAll</span><span class="p">(</span><span class="s1">&#39;ingredient&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">actions</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">addIngredient</span><span class="p">(</span><span class="nx">ingredientId</span><span class="p">,</span> <span class="nx">recipeId</span><span class="p">){</span>
+</span><span class='line'>      <span class="kd">let</span> <span class="nx">recipe</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">peekRecord</span><span class="p">(</span><span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="nx">recipeId</span><span class="p">);</span>
+</span><span class='line'>      <span class="kd">let</span> <span class="nx">ingredient</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">peekRecord</span><span class="p">(</span><span class="s1">&#39;ingredient&#39;</span><span class="p">,</span> <span class="nx">ingredientId</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">recipe</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;ingredients&#39;</span><span class="p">).</span><span class="nx">pushObject</span><span class="p">(</span><span class="nx">ingredient</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">recipe</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">removeIngredient</span><span class="p">(</span><span class="nx">ingredientId</span><span class="p">,</span> <span class="nx">recipeId</span><span class="p">){</span>
+</span><span class='line'>      <span class="kd">let</span> <span class="nx">recipe</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">peekRecord</span><span class="p">(</span><span class="s1">&#39;recipe&#39;</span><span class="p">,</span> <span class="nx">recipeId</span><span class="p">);</span>
+</span><span class='line'>      <span class="kd">let</span> <span class="nx">ingredient</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">peekRecord</span><span class="p">(</span><span class="s1">&#39;ingredient&#39;</span><span class="p">,</span> <span class="nx">ingredientId</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">recipe</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;ingredients&#39;</span><span class="p">).</span><span class="nx">removeObject</span><span class="p">(</span><span class="nx">ingredient</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">recipe</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, you can see that by using the <code>sendAction()</code> method in the component, we&rsquo;re able to invoke actions from the route or controller corresponding to the template the component is rendered in. In this case, the <code>addIngredient</code> has been triggered, associating the ingredient and recipe together and persisting this information to the database.</p>
+
+<h2>5. RSVP.hash()</h2>
+
+<p><a href="http://emberjs.com/api/classes/RSVP.html#method_hash">Documentation</a></p>
+
+<p>This method belongs to Ember&rsquo;s RSVP class, and takes an object/hash composed of multiple promises. It returns a promise when all of these promises have been fulfilled, consisting of a hash whose keys mirror those of the original object/hash passed into the method.</p>
+
+<p>If that seems unclear, I found a really great use for this method recently - scenarios where you want to specify multiple models on a single route. Many times, a single route has a single model, like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s1">&#39;ember&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">export</span> <span class="k">default</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Route</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">model</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;modelName&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But what if you want to have access to multiple models on a single route? You can, with <code>RSVP.hash()</code>, like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="s1">&#39;ember&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">export</span> <span class="k">default</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Route</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">model</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">params</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">RSVP</span><span class="p">.</span><span class="nx">hash</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">firstModel</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">findRecord</span><span class="p">(</span><span class="s1">&#39;firstModel&#39;</span><span class="p">,</span> <span class="nx">params</span><span class="p">.</span><span class="nx">first_model_id</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">secondModels</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">findAll</span><span class="p">(</span><span class="s1">&#39;secondModel&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusions</h2>
+
+<p>That&rsquo;s just a taste of some of the interesting methods I&rsquo;ve come across in Ember so far. As mentioned at the start of this post, I&rsquo;m going to create a followup showing five more interesting methods, so stay tuned!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ES2015 and Destructuring Assignment]]></title>

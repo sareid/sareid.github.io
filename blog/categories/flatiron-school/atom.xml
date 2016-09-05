@@ -4,7 +4,7 @@
   <title><![CDATA[Category: flatiron&nbsp;school | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/flatiron-school/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-08-03T21:48:11-04:00</updated>
+  <updated>2016-09-05T00:05:56-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -36,7 +36,9 @@
 
 <p>So, what do Turbolinks do? From the source:</p>
 
-<p><blockquote><p>Turbolinks makes following links in your web application faster. Instead of letting the browser recompile the JavaScript and CSS between each page change, it keeps the current page instance alive and replaces only the body (or parts of) and the title in the head.</p><footer><strong>ReadMe <a href="https://github.com/rails/turbolinks">https://github.com/rails/turbolinks</a> Turbolinks on Github</strong></footer></blockquote></p>
+<p>{% blockquote ReadMe <a href="https://github.com/rails/turbolinks">https://github.com/rails/turbolinks</a> Turbolinks on Github %}
+Turbolinks makes following links in your web application faster. Instead of letting the browser recompile the JavaScript and CSS between each page change, it keeps the current page instance alive and replaces only the body (or parts of) and the title in the head.
+{% endblockquote %}</p>
 
 <p>That&rsquo;s rad, right? I want to make my links faster! And thats great that I don&rsquo;t need to redownload my CSS and JS resources each time I click a link. It seems to me like that would be great for the user experience, especially on mobile devices.</p>
 

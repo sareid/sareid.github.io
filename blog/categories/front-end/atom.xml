@@ -4,7 +4,7 @@
   <title><![CDATA[Category: front-end | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/front-end/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-08-03T21:48:11-04:00</updated>
+  <updated>2016-09-05T00:05:56-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -14,6 +14,203 @@
 
   
   <entry>
+    <title type="html"><![CDATA[5 Cool Ember Functions]]></title>
+    <link href="http://sareid.github.io/blog/2016/09/04/5-cool-ember-functions/"/>
+    <updated>2016-09-04T16:08:46-04:00</updated>
+    <id>http://sareid.github.io/blog/2016/09/04/5-cool-ember-functions</id>
+    <content type="html"><![CDATA[<p><strong>NOTE: As I&rsquo;ve found too many interesting methods, this will be a two parter, with five more methods to come.</strong></p>
+
+<p><img src="http://i.imgur.com/uRC8hZ1.jpg" alt="Tomster wearing sunglasses" /></p>
+
+<p>One of the biggest challenges of learning Ember (or any framework really) is familiarising yourself with all the tools it provides. Sometimes I&rsquo;ve needed a tool and not known that there&rsquo;s a specific function baked in that does what I need. Of course there are great resources out there like Stack Overflow and the excellent <a href="https://ember-community-slackin.herokuapp.com/">Ember community Slack channel</a>, but even then sometimes it&rsquo;s tricky to find what you&rsquo;re looking for.<!--more--></p>
+
+<p>I&rsquo;ve recently challenged myself to read through the <a href="http://emberjs.com/api/">Ember API documentation</a> in its entirety. It&rsquo;s rather long, and a little dry sometimes, but the best part so far has been discovering all sorts of random and neat functions baked into Ember that I didn&rsquo;t know about. Today I&rsquo;m going to share 5 of my favourites.</p>
+
+<p>I should start by noting that while I&rsquo;ve labeled this post as &lsquo;5 Cool Ember Functions&rsquo;, most of the functions I&rsquo;m looking at are actually methods - that is, they&rsquo;re functions stored as the properties of different objects in Ember.</p>
+
+<h2>1. loc()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.String.html#method_loc">Documentation</a></p>
+
+<p>This is a method of the <a href="http://emberjs.com/api/classes/Ember.String.html#method_loc">Ember.String namespace.</a> Most of the methods in this namespace are concerned with formatting (e.g, changing a string from camelCasing to kebab-casing). The <code>loc()</code> method, however formats the passed string, but first checks to see if it is a key in the <code>Ember.STRING</code> hash. One important use for this is in localisation (or, you know, localization). Take the following example:</p>
+
+<pre><code class="javascript">Ember.STRINGS = {
+    '_color': 'colour',
+    '_president': 'Prime Minister'
+};
+
+Ember.String.loc("_color");  // 'color';
+Ember.String.loc("_president");  // 'Prime Minister';
+</code></pre>
+
+<p>The <code>loc()</code> method can be called as a helper in a template too. Given the above bit of code, you could have a template like this:
+{% raw %}
+    <h1>
+      {{loc &lsquo;_president&rsquo;}}
+    </h1>
+{% endraw %}
+&hellip;would be translated to:
+{% raw %}
+    <h1>
+      Prime Minister
+    </h1>
+{% endraw %}</p>
+
+<h2>2. invoke()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.Array.html#method_invoke">Documentation</a></p>
+
+<p>This method is part of Ember&rsquo;s <a href="https://github.com/emberjs/ember.js/blob/v2.7.0/packages/ember-runtime/lib/mixins/enumerable.js#L682">Enumerable mixin</a>, which is inherited by the Ember.Array class, amongst others. In short, it invokes a named function on every element in the collection it is called upon (like an array), with the ability to take additional arguments. One neat use of it is for simplifying <code>foreach</code> iterations where a single function is called upon each element in the collection, like this:</p>
+
+<pre><code class="javascript">sampleArray.forEach(function(item) {
+  item.sampleMethod(argument);
+});
+</code></pre>
+
+<p>Instead, the invoke function can be used to provide a simpler piece of code, like this:</p>
+
+<pre><code class="javascript">sampleArray.invoke('sampleMetod', argument);
+</code></pre>
+
+<p>Much simpler!</p>
+
+<h2>3. mapBy()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.Array.html#method_mapBy">Documentation</a></p>
+
+<p>If you&rsquo;ve used JavaScript (or, in fact, Ruby), you&rsquo;re most likely familiar with the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/map">Array.prototype.map()</a> function, which allows you to call a function on each item in an enumerable and return a new array with the resulting values. The <code>mapBy()</code> method is similar to this function, but it used when your array is composed of enumerables. It extracts the values of a specified property from those arrays and returns their value as a new array. Take the following example:</p>
+
+<pre><code class="javascript">var superman = Ember.Object.create({
+  superpower: "Invicibility"
+});
+
+var batman = Ember.Object.create({
+  superpower: "Money"
+});
+
+var superheroes = [superman, batman]
+
+superheroes.mapBy('superpower');
+//=&gt;["Invicibility", "Money"]
+</code></pre>
+
+<h2>4. sendAction()</h2>
+
+<p><a href="http://emberjs.com/api/classes/Ember.Component.html#method_sendAction">Documentation</a></p>
+
+<p>This method belongs to the Ember.Component class, and calls an action that has been passed into a component from the corresponding controller or route handler. It allows you to translate events that happen within a component (like a click, hover, or scroll) into a specific action, while also passing alongs parameters obtained within the component.</p>
+
+<p>For example, I recently put together a <a href="https://dragndrop-recipe-book.herokuapp.com/recipes">recipe book app that demos HTML5 drag and drop</a> in Ember. As part of the demo, I built a <code>draggable-dropzone</code> component, where items could be dragged over and released, in this case associating an ingredient with a recipe. The JavaScript for this component is as follows:</p>
+
+<pre><code class="javascript">
+import Ember from 'ember';
+
+var { set } = Ember;
+
+export default Ember.Component.extend({
+  classNames: ['draggableDropzone'],
+  classNameBindings: ['dragClass'],
+  dragClass: 'deactivated',
+
+  dragLeave(event) {
+    event.preventDefault();
+    set(this, 'dragClass', 'deactivated');
+  },
+
+  dragOver(event) {
+    event.preventDefault();
+    set(this, 'dragClass', 'activated');
+  },
+
+  drop(event) {
+    var data = event.dataTransfer.getData('text/data');
+    this.sendAction('dropped', data, this.get('recipeId'));
+
+    set(this, 'dragClass','deactivated');
+  }
+});
+</code></pre>
+
+<p>When the <code>drop</code> function is triggered, by dragging an item and dropping it over the component, it assigns the data from the item being dragged (in this case the ID of an ingredient) to a <code>data</code> variable. It then invokes the <code>sendAction()</code> method, which triggers the <code>dropped</code> method, passing both the <code>data</code> variable, and the ID of the recipe currently being shown in the template.</p>
+
+<p>I&rsquo;ve included this component into the <code>app/templates/recipes/recipe.hbs</code> template using the following code:</p>
+
+<p>{% raw %}
+    {{#draggable-dropzone dropped=&ldquo;addIngredient&rdquo; recipeId=model.recipe.id}}
+    &hellip;some html
+    {{/draggable-dropzone}}
+{% endraw %}</p>
+
+<p>You can see here that the <code>dropped</code> method, passed into the component, corresponds to the addIngredient action in the <code>app/routes/recipes/recipe.js</code> route, which looks like this:</p>
+
+<pre><code class="javascript">import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model: function(params){
+    return Ember.RSVP.hash({
+      recipe: this.store.findRecord('recipe', params.recipe_id),
+      ingredients: this.store.findAll('ingredient')
+    });
+  },
+
+  actions: {
+    addIngredient(ingredientId, recipeId){
+      let recipe = this.get('store').peekRecord('recipe', recipeId);
+      let ingredient = this.get('store').peekRecord('ingredient', ingredientId);
+      recipe.get('ingredients').pushObject(ingredient);
+      recipe.save();
+    },
+    removeIngredient(ingredientId, recipeId){
+      let recipe = this.get('store').peekRecord('recipe', recipeId);
+      let ingredient = this.get('store').peekRecord('ingredient', ingredientId);
+      recipe.get('ingredients').removeObject(ingredient);
+      recipe.save();
+    }
+  }
+});
+</code></pre>
+
+<p>So, you can see that by using the <code>sendAction()</code> method in the component, we&rsquo;re able to invoke actions from the route or controller corresponding to the template the component is rendered in. In this case, the <code>addIngredient</code> has been triggered, associating the ingredient and recipe together and persisting this information to the database.</p>
+
+<h2>5. RSVP.hash()</h2>
+
+<p><a href="http://emberjs.com/api/classes/RSVP.html#method_hash">Documentation</a></p>
+
+<p>This method belongs to Ember&rsquo;s RSVP class, and takes an object/hash composed of multiple promises. It returns a promise when all of these promises have been fulfilled, consisting of a hash whose keys mirror those of the original object/hash passed into the method.</p>
+
+<p>If that seems unclear, I found a really great use for this method recently - scenarios where you want to specify multiple models on a single route. Many times, a single route has a single model, like this:
+```javascript
+import Ember from &lsquo;ember&rsquo;;</p>
+
+<p>export default Ember.Route.extend({
+  model() {
+    return this.get(&lsquo;store&rsquo;).query(&lsquo;modelName&rsquo;);
+  }
+});
+<code>
+But what if you want to have access to multiple models on a single route? You can, with `RSVP.hash()`, like this:
+</code>javascript</p>
+
+<p>import Ember from &lsquo;ember&rsquo;;</p>
+
+<p>export default Ember.Route.extend({
+  model: function(params){
+    return Ember.RSVP.hash({
+      firstModel: this.store.findRecord(&lsquo;firstModel&rsquo;, params.first_model_id),
+      secondModels: this.store.findAll(&lsquo;secondModel&rsquo;)
+    });
+  },
+});
+<code>``
+The method waits for both the promises (in this case queries to the database) to be fulfilled, and then returns an object with two keys:</code>firstModel<code>and</code>secondModel`, whose values correspond to the data retrieved from the database.</p>
+
+<h2>Conclusions</h2>
+
+<p>That&rsquo;s just a taste of some of the interesting methods I&rsquo;ve come across in Ember so far. As mentioned at the start of this post, I&rsquo;m going to create a followup showing five more interesting methods, so stay tuned!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[ES2015 and Destructuring Assignment]]></title>
     <link href="http://sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment/"/>
     <updated>2016-08-03T13:04:22-04:00</updated>
@@ -21,13 +218,11 @@
     <content type="html"><![CDATA[<p>This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 for declaring and assigning variables that I was heretofore unfamiliar with: destructuring assignment.</p>
 
 <p>Recently, while reading a <a href="https://emberway.io/ember-js-and-html5-drag-and-drop-fa5dfe478a9a#.4fqjphkvm">blog post</a> on implementing drag and drop functionality in Ember.js with HTML5, I noticed a method of variable declaration in JavaScript that was new to me. In the code for a specific component, I saw this:<!--more-->
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">ember</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="p">{</span> <span class="nx">set</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
+```javascript
+import Ember from &lsquo;ember&rsquo;;</p>
+
+<p>var { set } = Ember;
+```
 The first line is one I&rsquo;ve seen a lot - it assigns the actual Ember.js library in the form of an object to an &lsquo;Ember&rsquo; variable, giving us easy access to it in the subsequent code. This object consists of a large number of properties, each of which is a method from the Ember.js library. The next line was a bit more puzzling to me. Why was the variable name wrapped in curly braces like that?</p>
 
 <p>So, I did what <a href="http://www.theallium.com/engineering/computer-programming-to-be-officially-renamed-googling-stackoverflow/">programmers do best</a>, and soon found myself on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">relevant part</a> of MDN&rsquo;s JavaScript section. Here&rsquo;s what I learned.</p>
@@ -49,60 +244,38 @@ console.log(first); // We get an error, telling us that 'first' is undefined.
 console.log(second); // 2
 </code>
 We can also assign default values, in case the data extracted from an array is undefined, like the following:
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">[</span><span class="nx">first</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="nx">second</span><span class="o">=</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// 1</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// 7</span>
-</span></code></pre></td></tr></table></div></figure></p>
+```javascript
+var first, second;</p>
+
+<p>[first=6, second=7] = [1];
+console.log(first); // 1
+console.log(second); // 7
+```</p>
 
 <h3>Object destructuring</h3>
 
 <p>Just like with the examples of arrays above, we can use destructuring assignment on objects too, assigning specific object properties as values to the newly declared variables. Take the following example, where the <code>outfit()</code> function returns an object.
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">outfit</span><span class="p">(){</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">{</span><span class="nx">pants</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">blue</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">shirt</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">red</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">hat</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">yello</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;};</span>
-</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="p">{</span><span class="nx">pants</span><span class="p">}</span> <span class="o">=</span> <span class="nx">outfit</span><span class="p">();</span> <span class="c1">// pants = &amp;ldquo;blue&amp;rdquo;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span>
-</span><span class='line'><span class="nx">As</span> <span class="nx">was</span> <span class="nx">the</span> <span class="k">case</span> <span class="kd">with</span> <span class="nx">elements</span> <span class="nx">of</span> <span class="nx">arrays</span><span class="p">,</span> <span class="nx">we</span> <span class="nx">use</span> <span class="nx">destructuring</span> <span class="nx">assignment</span> <span class="nx">to</span> <span class="nx">assign</span> <span class="nx">a</span> <span class="nx">specific</span> <span class="nx">property</span> <span class="nx">of</span> <span class="nx">an</span> <span class="nx">object</span> <span class="nx">as</span> <span class="nx">the</span> <span class="nx">variable</span><span class="s1">&#39;s value - in this case, picking out the `pants` propety so the newly declared variable has a value of the string of &#39;</span><span class="nx">blue</span><span class="err">&#39;</span><span class="p">.</span> <span class="nx">We</span> <span class="nx">can</span> <span class="nx">also</span> <span class="nx">use</span> <span class="k">this</span> <span class="nx">assign</span> <span class="nx">properties</span> <span class="nx">to</span> <span class="nx">variables</span> <span class="kd">with</span> <span class="nx">different</span> <span class="nx">names</span><span class="p">,</span> <span class="nx">using</span> <span class="nx">the</span> <span class="nx">following</span> <span class="nx">syntax</span><span class="o">:</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;javascript</span>
-</span><span class='line'><span class="kd">function</span> <span class="nx">outfit</span><span class="p">(){</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">{</span><span class="nx">pants</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">blue</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">shirt</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">red</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nx">hat</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">yello</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;};</span>
-</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="p">{</span><span class="nx">pants</span><span class="o">:</span> <span class="nx">trousers</span><span class="p">}</span> <span class="o">=</span> <span class="nx">outfit</span><span class="p">();</span> <span class="c1">// trousers = &amp;ldquo;blue&amp;rdquo;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="err">``</span>
-</span><span class='line'><span class="nx">Here</span><span class="p">,</span> <span class="nx">the</span> <span class="k">new</span><span class="o">&lt;</span><span class="err">/code&gt;trousers&lt;code&gt;variable has the same value as the&lt;/code&gt;pants` property.&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Back</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">initial</span> <span class="nx">example</span><span class="o">&lt;</span><span class="err">/h3&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Okay</span><span class="p">,</span> <span class="nx">so</span> <span class="nx">now</span> <span class="nx">that</span> <span class="nx">we</span> <span class="nx">understand</span> <span class="nx">destructuring</span> <span class="nx">assignment</span> <span class="nx">a</span> <span class="nx">little</span> <span class="nx">better</span><span class="p">,</span> <span class="kd">let</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">s</span> <span class="nx">look</span> <span class="nx">at</span> <span class="nx">that</span> <span class="nx">original</span> <span class="nx">bit</span> <span class="nx">of</span> <span class="nx">code</span> <span class="nx">from</span> <span class="nx">the</span> <span class="nx">blog</span> <span class="nx">above</span><span class="o">:</span>
-</span></code></pre></td></tr></table></div></figure>javascript
+```javascript
+function outfit(){
+  return {pants: &ldquo;blue&rdquo;, shirt: &ldquo;red&rdquo;, hat: &ldquo;yello&rdquo;};
+}</p>
+
+<p>var {pants} = outfit(); // pants = &ldquo;blue&rdquo;
+<code>
+As was the case with elements of arrays, we use destructuring assignment to assign a specific property of an object as the variable's value - in this case, picking out the `pants` propety so the newly declared variable has a value of the string of 'blue'. We can also use this assign properties to variables with different names, using the following syntax:
+</code>javascript
+function outfit(){
+  return {pants: &ldquo;blue&rdquo;, shirt: &ldquo;red&rdquo;, hat: &ldquo;yello&rdquo;};
+}</p>
+
+<p>var {pants: trousers} = outfit(); // trousers = &ldquo;blue&rdquo;
+<code>``
+Here, the new</code>trousers<code>variable has the same value as the</code>pants` property.</p>
+
+<h3>Back to the initial example</h3>
+
+<p>Okay, so now that we understand destructuring assignment a little better, let&rsquo;s look at that original bit of code from the blog above:
+```javascript
 import Ember from &lsquo;ember&rsquo;;</p>
 
 <p>var { set } = Ember;
@@ -335,7 +508,7 @@ export default Ember.Route.extend({
       <td>{ {person.phone} }</td>
       <td>{ {person.friends_since} }</td>
     </tr>
-    
+    {{/each}}
   </tbody>
 </table>
 
@@ -518,13 +691,11 @@ export default Ember.Controller.extend({
 <p>To render these maps, I was using the <a href="https://d3js.org/">D3 JavaScript library</a>. I needed to trigger two AJAX requests to my Carrier controller for two TopoJSON files (one for the US map, and one for the metropolitan areas). The latter of these two TopoJSON files was dynamically built in the <code>carriers#data</code> controller action and was unique to each instance of the Carrier model. I wanted these AJAX functions to fire as soon as the show page was loaded.</p>
 
 <p>The typical way to trigger a JavaScript function upon page load would be via a Document Ready function, which fires once the DOM is loaded, as such:
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span> <span class="nb">document</span> <span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Code goes here</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure></p>
+{% codeblock lang:javascript %}
+$( document ).ready(function() {
+    // Code goes here
+});
+{% endcodeblock %}</p>
 
 <p>However, as the Rails Asset Pipeline pre-compiles all your JavaScript and CoffeeScript files into a minified Application.js file, a Document Ready function will fire when any page in your app loads. One solution would have been to create a separate <code>carrier.js</code> file and include it manually in the Carrier show view like so:</p>
 
@@ -536,57 +707,38 @@ export default Ember.Controller.extend({
 
 <p>Indeed, a more elegant solution exists: the <a href="https://github.com/Verba/jquery-readyselector">jQuery ReadySelector plugin</a>. This plugin extends the <code>.ready()</code> function for when a specific element of the DOM is loaded. In Rails, the suggested option is to dynamically generate class names for the <code>&lt;body&gt;</code> tags of your view matching the current controller action being used. Using ERB tags, you can achieve this with the following code:</p>
 
-<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">&quot;&lt;%=</span> <span class="na">controller_name</span> <span class="na">-</span><span class="err">%</span><span class="nt">&gt;</span> <span class="ni">&amp;lt;</span>%= action_name -%&gt;<span class="ni">&amp;ldquo;</span>&gt;
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:html %}
+<body class="<%= controller_name -%> &lt;%= action_name -%>&ldquo;>
+{% endcodeblock %}</p>
 
 <p>With this in place, all of my Carrier show pages were rendered inside of <code>&lt;body class="carriers show"&gt;</code> tags. In my <code>carriers.js</code> file, I included the following code that would trigger the relevant AJAX requests whenever a carrier show page was loaded:</p>
 
-<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;.</span><span class="nx">carriers</span><span class="p">.</span><span class="nx">show</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">type</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">GET</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">contentType</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">application</span><span class="o">/</span><span class="nx">json</span><span class="p">;</span> <span class="nx">charset</span><span class="o">=</span><span class="nx">utf</span><span class="o">-</span><span class="mi">8</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">url</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">data</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">id</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="err">#</span><span class="nx">metro</span><span class="o">-</span><span class="nx">map</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;).</span><span class="nx">data</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">params</span><span class="o">-</span><span class="nx">id</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)},</span>
-</span><span class='line'>    <span class="nx">dataType</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">json</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span>
-</span><span class='line'>    <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">usData</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">usData</span><span class="p">){</span>
-</span><span class='line'>        <span class="nx">draw</span><span class="p">(</span><span class="nx">usData</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">})</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>      <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">error</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'><span class="p">})</span>
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:javascript %}
+$(&lsquo;.carriers.show&rsquo;).ready(function() {
+  $.ajax({
+    type: &ldquo;GET&rdquo;,
+    contentType: &ldquo;application/json; charset=utf-8&rdquo;,
+    url: &lsquo;data&rsquo;,
+    data: {&lsquo;id&rsquo;: $(&lsquo;#metro-map&rsquo;).data(&lsquo;params-id&rsquo;)},
+    dataType: &lsquo;json&rsquo;,
+    success: function (data) {
+      $.getJSON(&lsquo;usData&rsquo;, function(usData){
+        draw(usData, data);
+      })
+    },
+      error: function (result) {
+      error();
+    }
+  });
+})
+{% endcodeblock %}</p>
 
 <p>A few notes to explain what is happening. This function makes an AJAX request to the <code>#data</code> action in the Carrier controller, which serves back a topoJSON file. You&rsquo;ll note it uses the &lsquo;data&rsquo; field to pass the ID of the specific carrier to controller. I did this by using ERB tags to generate a custom data attribute in the <code>&lt;div&gt;</code> tag of the column I was appending the D3 map too. The value of this attribute corresponded to the ID of the carrier in question. The code for that looked like this:</p>
 
-<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;col-lg-12 text-center&quot;</span> <span class="na">id=</span><span class="s">&quot;metro-map&quot;</span> <span class="err">&lt;%=</span> <span class="err">&quot;</span><span class="na">data-params-id=</span><span class="s">#{params[:id]}&quot;</span> <span class="na">if</span> <span class="na">params</span><span class="err">.</span><span class="na">has_key</span><span class="err">?(</span><span class="na">:id</span><span class="err">)</span> <span class="err">%</span><span class="nt">&gt;</span>&gt;
-</span></code></pre></td></tr></table></div></figure></p>
+<p>{% codeblock lang:html %}</p>
+
+<p><div class="col-lg-12 text-center" id="metro-map" <%= "data-params-id=#{params[:id]}" if params.has_key?(:id) %>>
+{% endcodeblock %}</p>
 
 <p>The AJAX request uses the <code>.data()</code> function to pass the ID to the controller, which is able to query the database for the carrier in question, and then serve back the needed topoJSON. Upon a successful AJAX request, a second AJAX request is fired to the Carrier controller, this time serving back a static JSON with the information needed to render the map of the USA. The rest of the JavaScript code for rendering the D3 map can be <a href="https://github.com/sareid/carrier-selector/blob/master/app/assets/javascripts/carriers.js.erb">seen here</a>.</p>
 
