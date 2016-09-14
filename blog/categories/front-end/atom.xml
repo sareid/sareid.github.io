@@ -4,7 +4,7 @@
   <title><![CDATA[Category: front-end | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/front-end/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-09-05T00:05:56-04:00</updated>
+  <updated>2016-09-14T17:20:22-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What is XHTML?]]></title>
+    <link href="http://sareid.github.io/blog/2016/09/14/what-is-xhtml/"/>
+    <updated>2016-09-14T15:45:14-04:00</updated>
+    <id>http://sareid.github.io/blog/2016/09/14/what-is-xhtml</id>
+    <content type="html"><![CDATA[<p>In a recent conversation, I was asked to define what XHTML was. I did not know. I mean, I could make some guesses (and did): the HTML part was pretty clear, and scrabbling together context clues I correctly inferred that the &lsquo;X&rsquo; stood for <a href="https://en.wikipedia.org/wiki/Extensibility">extensible</a>.<!--more--></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[5 Cool Ember Functions]]></title>
@@ -745,108 +754,6 @@ $(&lsquo;.carriers.show&rsquo;).ready(function() {
 <h3>Conclusion</h3>
 
 <p>As you can see, this is a pretty neat trick for scoping your JavaScript to a particular type of view in your Rails app. Using dynamically generated class attributes in your <code>&lt;body&gt;</code> tag, you can have as many specific JavaScript <code>.ready()</code> functions as you have controller actions and views. And don&rsquo;t forget - with these dynamic class attributes, you can also create corresponding custom CSS for particular views too.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Bootstrap: Making front-end development easier since 1842 (note to self: check dates)]]></title>
-    <link href="http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/"/>
-    <updated>2016-01-12T07:41:35-05:00</updated>
-    <id>http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder</id>
-    <content type="html"><![CDATA[<h3>Front-end frameworks</h3>
-
-<p>Throughout the first six weeks I&rsquo;ve spent in the Flatiron School&rsquo;s Web Development immersive course, we&rsquo;ve largely stuck to the dark and bewildering world of the back-end, wading waist deep into the nitty-gritty muck and grime of SQL databases and Model View Controller designs. There&rsquo;s been a lot of plain code on plain screens.</p>
-
-<p>But you know what? Sometimes it&rsquo;s nice to feel pretty. So today I&rsquo;m going to talk about front-end frameworks.<!--more--></p>
-
-<p>In the same way that Rails is a framework of helpful tools for developing web-applications, front-end frameworks bring together a library of CSS, HTML and JavaScript tricks and techniques to help make the process of front-end design easier. Rather than creating default layouts and aesthetics from the ground up, they provide a jumping off point that saves you from doing spending a ton of time making sure that your <code>&lt;div&gt;</code> containers aren&rsquo;t bonkers. In short, they&rsquo;re pretty neat.</p>
-
-<p>So let&rsquo;s look at one in particular: <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
-
-<h3>Bootstrap? What are you going on about?</h3>
-
-<p>Bootstrap is the most popular front-end framework in use today, and has been forked over 38,000 times on Github. It began life as &lsquo;Twitter Blueprint&rsquo;, an internal project at Twitter aimed at ensuring coherence of design, and to reduce maintenance burden. The project soon escalated beyond its initial purpose as an internal tool, and in 2011 was released as an open source project. Subsequent versions (currently Version 3 with Version 4 in beta) introduced a focus on mobile design, and a flat, minimalist UI design.</p>
-
-<p>At its core, like any framework, Bootstrap is a toolkit for you to use for your own projects. It can be downloaded as CSS and JS files that can be linked to in your HTML files like any other stylesheet or script. In fact, to reduce filesize, you can download customised versions of these files that contain only the features your want to use.</p>
-
-<p>The <a href="http://getbootstrap.com/">Bootstrap</a> provides an extensive overview of its components, and provides example code that can be easily copied into your projects to get its features working.</p>
-
-<p>But what are these features? Just what exactly is Bootstrap bringing to the table. In the next section, I&rsquo;ll share 5 of things I find lovely about Bootstrap.</p>
-
-<h3>5 nifty Bootstrap features</h3>
-
-<h4>The grid system</h4>
-
-<p>Take a look at any site on the internet, and you are almost literally guaranteed to see the same thing: boxes. Take this very blog for example. All of the features of the site, like the header, blog articles, excerpts, and footer, are made up of different sized and shaped rectangles. This is called grid-based design, and is a pretty ubiquitous principle for web-design, some noteworthy examples not withstand cough cough the <a href="http://www.warnerbros.com/archive/spacejam/movie/jam.htm">surprisingly extant Space Jam website</a> cough cough.</p>
-
-<p><img src="http://i.imgur.com/0OMReu3.png" alt="Some noteworth exceptions not withstandings..." /></p>
-
-<p>A pre-built grid system facilitates quicker front-end design. Bootstrap provides a pre-built system for easily dividing your page into rows and columns. At its core, the screen is divided into 12 columns, labelled in your HTML with the <code>.col</code> class. The number at the end of your <code>.col</code> indicates the width of the particular column you are using, from 1 to 12. In the below screenshot, you can see how different column widths can be placed together. Depending on the size of the browser or screen, these columns become stackable - they automatically drop down to the row below, rather than forcing the user to scroll to the right.</p>
-
-<p><img src="http://i.imgur.com/TjaZJor.png" alt="Example of different column class widths" /></p>
-
-<p>Moreover, the <code>.col</code> class can also be divided altered using the <code>-xs</code>, <code>-sm</code>, <code>-md</code> or <code>-lg</code> modifier. These correspond to media queries, so that we can assign different types of layouts depending upon the device being used.</p>
-
-<p>Your rows and columns must be wrapped within a <code>.container</code> or <code>.container-fluid</code> class. The standard container is a responsive and fixed width container, while the &lsquo;fluid&rsquo; version is full-width and spans the width of your browswer or device screen.</p>
-
-<p>Using this system, you can quickly create a neatly organised site that acts responsively across different sized devices and viewports. In many ways, this is the biggest reason to use a front-end framwork - not just Bootstrap, but other simpler frameworks that focus only on providing grid systems.</p>
-
-<h4>Responsive utilities</h4>
-
-<p>As a compliment to the grid-system, Bootstrap lets you determine which HTML elements are visible or invisible, depending upon the viewport size. By adding the <code>.visible</code> or <code>.hidden</code> class with a particular size (eg. <code>-xs</code> or <code>-sm</code>), you can specifically choose what the user will see.</p>
-
-<h4>Glyphicons</h4>
-
-<p><a href="http://getbootstrap.com/components/#glyphicons">Link to glyphicons on Bootstrap website</a></p>
-
-<h4>Components: Buttons, navs, breadcrumbs and junk</h4>
-
-<p><a href="http://getbootstrap.com/components/#dropdowns">Link to components on the Bootstrap website</a></p>
-
-<h4>More jQuery plugins than you can shake a stick at</h4>
-
-<p><a href="http://getbootstrap.com/javascript/">Link to jQuery plugins on the Bootstrap website</a></p>
-
-<h3>Installing Bootstrap on Rails</h3>
-
-<p>I used Bootstrap for the design of my Sinatra project <a href="https://github.com/sareid/breddit">&lsquo;breddit&rsquo;</a>, precisely because it provided a quick way to organise the page layout into rows and columns. However, when tasked with porting the project to Rails, I had some problems getting the project o recognise my bootstrap files.</p>
-
-<p>Luckily, as we&rsquo;ve discovered with a great many things, there&rsquo;s a gem for that. In your Gemfile, include the following:</p>
-
-<pre><code class="ruby"># Gemfile
-
-...
-
-gem 'bootstrap-sass', '~&gt; 3.2.0'
-gem 'autoprefixer-rails'
-
-# NOTE: The sass-rails gem is included with new Rails applications by default.
-#       Please make sure that it is not already in your Gemfile before uncommenting it.
-# gem 'sass-rails'
-</code></pre>
-
-<p>Next, we need to import the CSS assets into our Bootstrap CSS file. As Bootstrap uses different versions of CSS (LESS and SASS), we rename <code>app/assets/stylesheets/application.css</code> to <code>app/assets/stylesheets/application.css.sass</code>, and then add the following code:</p>
-
-<pre><code class="ruby">// app/assets/stylesheets/application.css.sass
-
-@import "bootstrap-sprockets"
-@import "bootstrap"
-</code></pre>
-
-<p>To import the Javascript components, go to your <code>app/assets/javascripts/application.js</code> and add the following:</p>
-
-<pre><code class="js">// app/assets/javascripts/application.js
-
-...
-
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require bootstrap-sprockets
-//= require_tree .
-</code></pre>
-
-<p>Congratulations! You&rsquo;re off to the races with Bootstrap!</p>
 ]]></content>
   </entry>
   
