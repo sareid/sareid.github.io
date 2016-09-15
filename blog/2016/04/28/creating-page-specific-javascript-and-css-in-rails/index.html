@@ -93,7 +93,9 @@ in
 
 <p>However, as the Rails Asset Pipeline pre-compiles all your JavaScript and CoffeeScript files into a minified Application.js file, a Document Ready function will fire when any page in your app loads. One solution would have been to create a separate <code>carrier.js</code> file and include it manually in the Carrier show view like so:</p>
 
-<p><code>&lt;%= javascript_include_tag "carrier" %&gt;</code></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;%= javascript_include_tag "carrier" %&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This would require a separate JS file to be loaded alongside the <code>application.js</code> file, and for me to add specific instructions to the <code>production.rb</code> file. This is okay, but it seemed like there should be a more elegant solution.</p>
 

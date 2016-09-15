@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>What is XHTML? - andrew does his best</title>
+  <meta name="author" content="Andrew Reid">
+
+  
+  <meta name="description" content="What is XHTML? written in front-end In a recent conversation, I was asked if I knew what XHTML was. Much to my dismay, I did not. I mean, I could &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sareid.github.io/blog/2016/09/14/what-is-xhtml">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="andrew does his best" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href='https://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Crimson+Text' rel='stylesheet' type='text/css'>
+  
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>What is XHTML?</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2016-09-14T20:29:07-04:00" pubdate data-updated="true"></time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/front-end/'>front-end</a>
+  
+</span>
+
+
+        </div>
+        <p>In a recent conversation, I was asked if I knew what XHTML was. Much to my dismay, I did not. I mean, I could make some guesses (and did): the HTML part was pretty clear, and scrabbling together context clues I correctly inferred that the &lsquo;X&rsquo; stood for <a href="https://en.wikipedia.org/wiki/Extensibility">extensible</a>. But as to what XHTML was and how it differed from HTML or XML, I didn&rsquo;t know.</p>
+
+<p>So, on that note, today we&rsquo;re going to learn about XHTML.<!--more--></p>
+
+<h3>The Basics: XML</h3>
+
+<p>In short, XHTML is HTML written in XML. At this point, I&rsquo;m assuming you&rsquo;re familiar with HTML, which is often the first thing we ever learn in web development - but that might not be the case with XML, or &lsquo;Extensible Markup Language&rsquo;. XML is a markup language designed for storing and transporting data - it&rsquo;s similar in appearance to HTML, but whereas the tags in HTML provide information about how documents should be displayed in the browser, the tags in XML allow you to describe the nature of the data being conveyed. HTML&rsquo;s tags are pre-defined, while in XML you can create your own tags. Here&rsquo;s some sample XML:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</span><span class='line'>&lt;food&gt;
+</span><span class='line'>  &lt;name&gt;Cheddar&lt;/name&gt;
+</span><span class='line'>  &lt;type&gt;Cheese&lt;/type&gt;
+</span><span class='line'>  &lt;flavour&gt;Sharp, pungent and slightly earthy.&lt;/flavour&gt;
+</span><span class='line'>&lt;/food&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, the XML tags provide information about the nature of the data - the <code>&lt;food&gt;</code> tag id descriptive, as are the properties we have given it through the <code>&lt;name&gt;</code>, <code>&lt;type&gt;</code>, and <code>&lt;flavour&gt;</code> tags. This XML code does not do anything in and of itself. Another piece of software is needed to do something with it. XML is extensible because new data can be added and removed, and programs will typically still function. For example, we could add a <code>&lt;nationality&gt;</code> tag to the example above and it would still work.</p>
+
+<h3>XML vs HTML Syntax</h3>
+
+<p>Several characteristics of XML differ from HTML and become important when we look at XHTML. Firstly, XML is case sensitive, while HTML is case insensitive. Secondly,  all XTML tags must be closed. In HTML, sometimes code will still function with out a closing tag, like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;body&gt;
+</span><span class='line'>  &lt;h1&gt;Hello world!&lt;/h1&gt;
+</span><span class='line'>  &lt;p&gt;This is a simple piece of code
+</span><span class='line'>&lt;/body&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In XML, an unclosed tag is illegal and will produce an error. Similarly, XML tags must be properly nested. That is to say, tags must be opened and closed in order, and cannot overlap. This is not the case in HTML, where the following may still function as intended:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;div&gt;
+</span><span class='line'>  &lt;p&gt;Here is some sample text.
+</span><span class='line'>&lt;/div&gt;&lt;/p&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, generally speaking, the rules of syntax for XML are stricter than they are for HTML, and certain suboptimal practices that will escape unpunished in HTML will produce errors in XML. This strictness played a role in the rationale for developing XHTML.</p>
+
+<h3>The History of XHTML</h3>
+
+<p>In 1998, the World Wide Web Consortium (W3C), the main international organisation responsible for setting standards for the internet, published a document entitled <a href="https://www.w3.org/TR/1998/WD-html-in-xml-19981205/">&lsquo;Reformulating HTML in XML&rsquo;</a>. The document outlined a rationale for reformulating HTML4 as an XML application. First, as new methods of browsing the Internet were being introduced, the shift to XML was intended to increase user agent interoperability, with the ultimate goal being that XHTML would be able to be used by a broader range of agents than HTML. Secondly, the extensibility of XML would allow for the easier introduction of new elements and element attributes through XHTML modules, meaning that it would be relatively easy to introduce ways of expressing new ideas through markup.</p>
+
+<p>XHTML was also introduced in an attempt to promote &lsquo;well-formed&rsquo; code. Since, as described above, browswers are generally lenient regarding certain syntax errors in HTML, websites often contained numerous errors. The W3C viewed this as problematic - and by introducing HTML written in XML, whose syntatic rules were stricter, web developers would be forced to abide by these rules or have their website produce an error message in the browser.</p>
+
+<p>It would appear that the reaction to XHTML was less than enthusiastic - in part because so many web pages contained errors that the prospect of rewriting in XHTML (which provided little in the way of additional features over HTML4) was not very appealing. In fact, loopholes in the XHTML 1.0 specification meant that text that looked like XHTML could still be served as the text/html MIME type and avoid the stricter error handling.</p>
+
+<p>Meanwhile, in the early 2000s, a competing vision for an evolved version of the HTML4 standard began to emerge amongst actors like Mozilla and Opera, and was articulated by the Web Hypertext Applications Technology Working Group (WHAT Working Group). This vision aimed to develop specifications based on HTML that would expand HTML&rsquo;s functionality, ease the deployment of interoperable web applications, and (and this is key) not break backwards compatibility.</p>
+
+<p>In 2014, this vision was formally released as a stable W3C recommendation as HTML5, and its widespread adoption has hindered any further progress in the adoption of XHTML. Indeed, in 2009, the W3C shut down the XHTML 2.0 Working Group.</p>
+
+<h3>Conclusion</h3>
+
+<p>With the rise of HTML5, it would seem that XHTML will recede into the annals of internet history as a mere footnote. It is, however, fun to note that to this day it is still easy to find developers defending its use (as well as other developers decrying it). This Quora post, asking <a href="https://www.quora.com/Why-do-developers-still-use-XHTML/answer/Chris-Minnick-1">&lsquo;Why do developers still use XHTML?&rsquo;</a> is a fascinating read - though most of the argument in favour of XHTML is that it forces you to code with discipline.</p>
+
+<p>There you have it - a quick trip down the Internet&rsquo;s memory lane, sparked by a simple reference in a conversation.</p>
+
+
+        <hr class="divider-short"/>
+
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2016/09/04/5-cool-ember-functions/" title="Previous Post: 5 Cool Ember Functions">&laquo; Previous: 5 Cool Ember Functions</a>
+        
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/doeshisbest"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/sareid"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+    
+  </body>
+</html>

@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://sareid.github.io/blog/2016/09/14/what-is-xhtml/</loc>
-    <lastmod>2016-09-14T15:45:14-04:00</lastmod>
+    <lastmod>2016-09-14T20:29:07-04:00</lastmod>
   </url>
   <url>
     <loc>http://sareid.github.io/blog/2016/09/04/5-cool-ember-functions/</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/</loc>
-    <lastmod>2016-01-12T07:41:35-05:00</lastmod>
+    <lastmod>2016-01-12T00:00:00-05:00</lastmod>
   </url>
   <url>
     <loc>http://sareid.github.io/blog/2015/12/18/pstore-and-me-an-uneasy-alliance/</loc>
@@ -48,9 +48,6 @@
     <loc>http://sareid.github.io/blog/categories/ruby/</loc>
   </url>
   <url>
-    <loc>http://sareid.github.io/blog/categories/front-end/</loc>
-  </url>
-  <url>
     <loc>http://sareid.github.io/blog/categories/rails/</loc>
   </url>
   <url>
@@ -58,6 +55,9 @@
   </url>
   <url>
     <loc>http://sareid.github.io/blog/categories/css/</loc>
+  </url>
+  <url>
+    <loc>http://sareid.github.io/blog/categories/front-end/</loc>
   </url>
   <url>
     <loc>http://sareid.github.io/blog/categories/ember-dot-js/</loc>

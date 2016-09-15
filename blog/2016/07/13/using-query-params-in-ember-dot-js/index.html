@@ -307,57 +307,32 @@ in
 
 <p>For the moment, we don&rsquo;t need to add anything new to our controller, but we do need to fill out the <code>app/templates/people.hbs</code> template a bit. To make our front-end styling a little simpler, I&rsquo;m using the <a href="http://foundation.zurb.com/">Zurb Foundation</a> responsive framework. Don&rsquo;t worry if you don&rsquo;t understand how it works. I installed into my Ember app using the <a href="https://github.com/nadavshatz/ember-cli-foundation-sass">Ember Cli Foundation Sass addon</a>.</p>
 
-<p>In the template, I build a table of all the people in our database using the <code>{ {#each model as |person|} }</code> helper. It looks like this (ignore the spaces between the curly braces):</p>
+<p>In the template, I build a table of all the people in our database using the <code>#each model as</code> helper. It looks like this (ignore the spaces between the curly braces):</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">thead</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">First</span> <span class="nx">Name</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Last</span> <span class="nx">Name</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Nickname</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Age</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Email</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Phone</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Friends</span> <span class="nx">Since</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/thead&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">tbody</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="p">{</span> <span class="p">{</span><span class="err">#</span><span class="nx">each</span> <span class="nx">model</span> <span class="nx">as</span> <span class="o">|</span><span class="nx">person</span><span class="o">|</span><span class="p">}</span> <span class="p">}</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">first_name</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">last_name</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">nick_name</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">email</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">phone</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">friends_since</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="err">/tr&gt;</span>
-</span><span class='line'>    <span class="p"></span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/tbody&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/table&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<table>
+  <thead>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Nickname</th>
+    <th>Age</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Friends Since</th>
+  </thead>
+  <tbody>
+    { {#each model as |person|} }
+    <tr>
+      <td>{ {person.first_name} }</td>
+      <td>{ {person.last_name} }</td>
+      <td>{ {person.nick_name} }</td>
+      <td>{ {person.age} }</td>
+      <td>{ {person.email} }</td>
+      <td>{ {person.phone} }</td>
+      <td>{ {person.friends_since} }</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
 
 
 <p>If we navigate to <code>http://localhost:4200/people</code> we can see our table rendered with the people in our database! That&rsquo;s great. Though, with 400 entries in the database, it involves a LOT of scrolling:</p>

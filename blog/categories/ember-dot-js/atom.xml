@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ember.js | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/ember-dot-js/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-09-14T17:20:22-04:00</updated>
+  <updated>2016-09-14T23:08:54-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -44,17 +44,17 @@ Ember.String.loc("_president");  // 'Prime Minister';
 </code></pre>
 
 <p>The <code>loc()</code> method can be called as a helper in a template too. Given the above bit of code, you could have a template like this:
-{% raw %}
+
     <h1>
       {{loc &lsquo;_president&rsquo;}}
     </h1>
-{% endraw %}
+
 &hellip;would be translated to:
-{% raw %}
+
     <h1>
       Prime Minister
     </h1>
-{% endraw %}</p>
+</p>
 
 <h2>2. invoke()</h2>
 
@@ -135,11 +135,11 @@ export default Ember.Component.extend({
 
 <p>I&rsquo;ve included this component into the <code>app/templates/recipes/recipe.hbs</code> template using the following code:</p>
 
-<p>{% raw %}
+<p>
     {{#draggable-dropzone dropped=&ldquo;addIngredient&rdquo; recipeId=model.recipe.id}}
     &hellip;some html
     {{/draggable-dropzone}}
-{% endraw %}</p>
+</p>
 
 <p>You can see here that the <code>dropped</code> method, passed into the component, corresponds to the addIngredient action in the <code>app/routes/recipes/recipe.js</code> route, which looks like this:</p>
 
@@ -179,92 +179,151 @@ export default Ember.Route.extend({
 <p>This method belongs to Ember&rsquo;s RSVP class, and takes an object/hash composed of multiple promises. It returns a promise when all of these promises have been fulfilled, consisting of a hash whose keys mirror those of the original object/hash passed into the method.</p>
 
 <p>If that seems unclear, I found a really great use for this method recently - scenarios where you want to specify multiple models on a single route. Many times, a single route has a single model, like this:
-```javascript
-import Ember from &lsquo;ember&rsquo;;</p>
-
-<p>export default Ember.Route.extend({
-  model() {
-    return this.get(&lsquo;store&rsquo;).query(&lsquo;modelName&rsquo;);
-  }
-});
-<code>
-But what if you want to have access to multiple models on a single route? You can, with `RSVP.hash()`, like this:
-</code>javascript</p>
-
-<p>import Ember from &lsquo;ember&rsquo;;</p>
-
-<p>export default Ember.Route.extend({
-  model: function(params){
-    return Ember.RSVP.hash({
-      firstModel: this.store.findRecord(&lsquo;firstModel&rsquo;, params.first_model_id),
-      secondModels: this.store.findAll(&lsquo;secondModel&rsquo;)
-    });
-  },
-});
-<code>``
-The method waits for both the promises (in this case queries to the database) to be fulfilled, and then returns an object with two keys:</code>firstModel<code>and</code>secondModel`, whose values correspond to the data retrieved from the database.</p>
-
-<h2>Conclusions</h2>
-
-<p>That&rsquo;s just a taste of some of the interesting methods I&rsquo;ve come across in Ember so far. As mentioned at the start of this post, I&rsquo;m going to create a followup showing five more interesting methods, so stay tuned!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ES2015 and Destructuring Assignment]]></title>
-    <link href="http://sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment/"/>
-    <updated>2016-08-03T13:04:22-04:00</updated>
-    <id>http://sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment</id>
-    <content type="html"><![CDATA[<p>This blog is a simple one - I just wanted to write a bit about a neat technique in ES2015 for declaring and assigning variables that I was heretofore unfamiliar with: destructuring assignment.</p>
-
-<p>Recently, while reading a <a href="https://emberway.io/ember-js-and-html5-drag-and-drop-fa5dfe478a9a#.4fqjphkvm">blog post</a> on implementing drag and drop functionality in Ember.js with HTML5, I noticed a method of variable declaration in JavaScript that was new to me. In the code for a specific component, I saw this:<!--more-->
-```javascript
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">ember</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kr">export</span> <span class="k">default</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Route</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">model</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">store</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;).</span><span class="nx">query</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">modelName</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nx">But</span> <span class="nx">what</span> <span class="k">if</span> <span class="nx">you</span> <span class="nx">want</span> <span class="nx">to</span> <span class="nx">have</span> <span class="nx">access</span> <span class="nx">to</span> <span class="nx">multiple</span> <span class="nx">models</span> <span class="nx">on</span> <span class="nx">a</span> <span class="nx">single</span> <span class="nx">route</span><span class="o">?</span> <span class="nx">You</span> <span class="nx">can</span><span class="p">,</span> <span class="kd">with</span> <span class="err">`</span><span class="nx">RSVP</span><span class="p">.</span><span class="nx">hash</span><span class="p">()</span><span class="err">`</span><span class="p">,</span> <span class="nx">like</span> <span class="k">this</span><span class="o">:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt; javascript&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">ember</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kr">export</span> <span class="k">default</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">Route</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">model</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">params</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">RSVP</span><span class="p">.</span><span class="nx">hash</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">firstModel</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">findRecord</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">firstModel</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="nx">params</span><span class="p">.</span><span class="nx">first_model_id</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">secondModels</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">findAll</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">secondModel</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="err">``</span>
+</span><span class='line'><span class="nx">The</span> <span class="nx">method</span> <span class="nx">waits</span> <span class="k">for</span> <span class="nx">both</span> <span class="nx">the</span> <span class="nx">promises</span> <span class="p">(</span><span class="k">in</span> <span class="k">this</span> <span class="k">case</span> <span class="nx">queries</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">database</span><span class="p">)</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">fulfilled</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">then</span> <span class="nx">returns</span> <span class="nx">an</span> <span class="nx">object</span> <span class="kd">with</span> <span class="nx">two</span> <span class="nx">keys</span><span class="o">:&lt;</span><span class="err">/code&gt;firstModel&lt;code&gt;and&lt;/code&gt;secondModel`, whose values correspond to the data retrieved from the database.&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">Conclusions</span><span class="o">&lt;</span><span class="err">/h2&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">That</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">s</span> <span class="nx">just</span> <span class="nx">a</span> <span class="nx">taste</span> <span class="nx">of</span> <span class="nx">some</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">interesting</span> <span class="nx">methods</span> <span class="nx">I</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">ve</span> <span class="nx">come</span> <span class="nx">across</span> <span class="k">in</span> <span class="nx">Ember</span> <span class="nx">so</span> <span class="nx">far</span><span class="p">.</span> <span class="nx">As</span> <span class="nx">mentioned</span> <span class="nx">at</span> <span class="nx">the</span> <span class="nx">start</span> <span class="nx">of</span> <span class="k">this</span> <span class="nx">post</span><span class="p">,</span> <span class="nx">I</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">m</span> <span class="nx">going</span> <span class="nx">to</span> <span class="nx">create</span> <span class="nx">a</span> <span class="nx">followup</span> <span class="nx">showing</span> <span class="nx">five</span> <span class="nx">more</span> <span class="nx">interesting</span> <span class="nx">methods</span><span class="p">,</span> <span class="nx">so</span> <span class="nx">stay</span> <span class="nx">tuned</span><span class="o">!&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'><span class="p">]]</span><span class="o">&gt;&lt;</span><span class="err">/content&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/entry&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">entry</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">title</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="nx">CDATA</span><span class="p">[</span><span class="nx">ES2015</span> <span class="nx">and</span> <span class="nx">Destructuring</span> <span class="nx">Assignment</span><span class="p">]]</span><span class="o">&gt;&lt;</span><span class="err">/title&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;http://sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment/&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">updated</span><span class="o">&gt;</span><span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">03</span><span class="nx">T13</span><span class="o">:</span><span class="mi">04</span><span class="o">:</span><span class="mi">22</span><span class="o">-</span><span class="mi">04</span><span class="o">:</span><span class="mi">00</span><span class="o">&lt;</span><span class="err">/updated&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">id</span><span class="o">&gt;</span><span class="nx">http</span><span class="o">:</span><span class="c1">//sareid.github.io/blog/2016/08/03/es6-and-the-destructuring-assignment&lt;/id&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">content</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="nx">CDATA</span><span class="p">[</span><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">blog</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">simple</span> <span class="nx">one</span> <span class="o">-</span> <span class="nx">I</span> <span class="nx">just</span> <span class="nx">wanted</span> <span class="nx">to</span> <span class="nx">write</span> <span class="nx">a</span> <span class="nx">bit</span> <span class="nx">about</span> <span class="nx">a</span> <span class="nx">neat</span> <span class="nx">technique</span> <span class="k">in</span> <span class="nx">ES2015</span> <span class="k">for</span> <span class="nx">declaring</span> <span class="nx">and</span> <span class="nx">assigning</span> <span class="nx">variables</span> <span class="nx">that</span> <span class="nx">I</span> <span class="nx">was</span> <span class="nx">heretofore</span> <span class="nx">unfamiliar</span> <span class="kd">with</span><span class="o">:</span> <span class="nx">destructuring</span> <span class="nx">assignment</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">Recently</span><span class="p">,</span> <span class="k">while</span> <span class="nx">reading</span> <span class="nx">a</span> <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://emberway.io/ember-js-and-html5-drag-and-drop-fa5dfe478a9a#.4fqjphkvm&quot;</span><span class="o">&gt;</span><span class="nx">blog</span> <span class="nx">post</span><span class="o">&lt;</span><span class="err">/a&gt; on implementing drag and drop functionality in Ember.js with HTML5, I noticed a method of variable declaration in JavaScript that was new to me. In the code for a specific component, I saw this:&lt;!--more--&gt;</span>
+</span></code></pre></td></tr></table></div></figure> javascript
 import Ember from &lsquo;ember&rsquo;;</p>
 
 <p>var { set } = Ember;
-```
-The first line is one I&rsquo;ve seen a lot - it assigns the actual Ember.js library in the form of an object to an &lsquo;Ember&rsquo; variable, giving us easy access to it in the subsequent code. This object consists of a large number of properties, each of which is a method from the Ember.js library. The next line was a bit more puzzling to me. Why was the variable name wrapped in curly braces like that?</p>
-
-<p>So, I did what <a href="http://www.theallium.com/engineering/computer-programming-to-be-officially-renamed-googling-stackoverflow/">programmers do best</a>, and soon found myself on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">relevant part</a> of MDN&rsquo;s JavaScript section. Here&rsquo;s what I learned.</p>
-
-<h3>Destructuring assignment</h3>
-
-<p>A new feature in <a href="https://babeljs.io/docs/learn-es2015/">ES2015</a>, destructuring assignment syntax allows us to &ldquo;extract data from arrays or objects into distinct variables&rdquo;. What this means, is that given an array or object, we can declare a variable and immediately assign it specific elements or properties as a value. Here&rsquo;s a simple example (we&rsquo;ll start with arrays and then move to objects):
-<code>javascript
-var array = [1,2,3,4]
-var [first, second] = array;
-console.log(first); // 1
-console.log(second); // 2
-</code>
-As you can see, using destructuring assignment in line 2, we declare <code>first</code> and <code>second</code> variables, and assign them values corresponding to the same elements in the <code>array</code> variable. In this case, the first two elements are used, and the rest are automatically skipped. But we could skip the first element too, like this:
-<code>javascript
-var array = [1,2,3,4]
-var [, second] = array;
-console.log(first); // We get an error, telling us that 'first' is undefined.
-console.log(second); // 2
-</code>
-We can also assign default values, in case the data extracted from an array is undefined, like the following:
-```javascript
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">The</span> <span class="nx">first</span> <span class="nx">line</span> <span class="nx">is</span> <span class="nx">one</span> <span class="nx">I</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="nx">ve</span> <span class="nx">seen</span> <span class="nx">a</span> <span class="nx">lot</span> <span class="o">-</span> <span class="nx">it</span> <span class="nx">assigns</span> <span class="nx">the</span> <span class="nx">actual</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">js</span> <span class="nx">library</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">form</span> <span class="nx">of</span> <span class="nx">an</span> <span class="nx">object</span> <span class="nx">to</span> <span class="nx">an</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">Ember</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span> <span class="nx">variable</span><span class="p">,</span> <span class="nx">giving</span> <span class="nx">us</span> <span class="nx">easy</span> <span class="nx">access</span> <span class="nx">to</span> <span class="nx">it</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">subsequent</span> <span class="nx">code</span><span class="p">.</span> <span class="nx">This</span> <span class="nx">object</span> <span class="nx">consists</span> <span class="nx">of</span> <span class="nx">a</span> <span class="nx">large</span> <span class="nx">number</span> <span class="nx">of</span> <span class="nx">properties</span><span class="p">,</span> <span class="nx">each</span> <span class="nx">of</span> <span class="nx">which</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">method</span> <span class="nx">from</span> <span class="nx">the</span> <span class="nx">Ember</span><span class="p">.</span><span class="nx">js</span> <span class="nx">library</span><span class="p">.</span> <span class="nx">The</span> <span class="nx">next</span> <span class="nx">line</span> <span class="nx">was</span> <span class="nx">a</span> <span class="nx">bit</span> <span class="nx">more</span> <span class="nx">puzzling</span> <span class="nx">to</span> <span class="nx">me</span><span class="p">.</span> <span class="nx">Why</span> <span class="nx">was</span> <span class="nx">the</span> <span class="nx">variable</span> <span class="nx">name</span> <span class="nx">wrapped</span> <span class="k">in</span> <span class="nx">curly</span> <span class="nx">braces</span> <span class="nx">like</span> <span class="nx">that</span><span class="o">?&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">So</span><span class="p">,</span> <span class="nx">I</span> <span class="nx">did</span> <span class="nx">what</span> <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;http://www.theallium.com/engineering/computer-programming-to-be-officially-renamed-googling-stackoverflow/&quot;</span><span class="o">&gt;</span><span class="nx">programmers</span> <span class="k">do</span> <span class="nx">best</span><span class="o">&lt;</span><span class="sr">/a&gt;, and soon found myself on the &lt;a href=&quot;https:/</span><span class="o">/</span><span class="nx">developer</span><span class="p">.</span><span class="nx">mozilla</span><span class="p">.</span><span class="nx">org</span><span class="o">/</span><span class="nx">en</span><span class="o">-</span><span class="nx">US</span><span class="o">/</span><span class="nx">docs</span><span class="o">/</span><span class="nx">Web</span><span class="o">/</span><span class="nx">JavaScript</span><span class="o">/</span><span class="nx">Reference</span><span class="o">/</span><span class="nx">Operators</span><span class="o">/</span><span class="nx">Destructuring_assignment</span><span class="s2">&quot;&gt;relevant part&lt;/a&gt; of MDN&amp;rsquo;s JavaScript section. Here&amp;rsquo;s what I learned.&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;h3&gt;Destructuring assignment&lt;/h3&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&lt;p&gt;A new feature in &lt;a href=&quot;</span><span class="nx">https</span><span class="o">:</span><span class="c1">//babeljs.io/docs/learn-es2015/&quot;&gt;ES2015&lt;/a&gt;, destructuring assignment syntax allows us to &amp;ldquo;extract data from arrays or objects into distinct variables&amp;rdquo;. What this means, is that given an array or object, we can declare a variable and immediately assign it specific elements or properties as a value. Here&amp;rsquo;s a simple example (we&amp;rsquo;ll start with arrays and then move to objects):</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">javascript</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="kd">var</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">]</span> <span class="o">=</span> <span class="nx">array</span><span class="p">;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// 1</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// 2</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;</span>
+</span><span class='line'><span class="nx">As</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">see</span><span class="p">,</span> <span class="nx">using</span> <span class="nx">destructuring</span> <span class="nx">assignment</span> <span class="k">in</span> <span class="nx">line</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">we</span> <span class="nx">declare</span> <span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">first</span><span class="o">&lt;</span><span class="err">/code&gt; and &lt;code&gt;second&lt;/code&gt; variables, and assign them values corresponding to the same elements in the &lt;code&gt;array&lt;/code&gt; variable. In this case, the first two elements are used, and the rest are automatically skipped. But we could skip the first element too, like this:</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">javascript</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="kd">var</span> <span class="p">[,</span> <span class="nx">second</span><span class="p">]</span> <span class="o">=</span> <span class="nx">array</span><span class="p">;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span> <span class="c1">// We get an error, telling us that &#39;first&#39; is undefined.</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span><span class="p">);</span> <span class="c1">// 2</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;</span>
+</span><span class='line'><span class="nx">We</span> <span class="nx">can</span> <span class="nx">also</span> <span class="nx">assign</span> <span class="k">default</span> <span class="nx">values</span><span class="p">,</span> <span class="k">in</span> <span class="k">case</span> <span class="nx">the</span> <span class="nx">data</span> <span class="nx">extracted</span> <span class="nx">from</span> <span class="nx">an</span> <span class="nx">array</span> <span class="nx">is</span> <span class="kc">undefined</span><span class="p">,</span> <span class="nx">like</span> <span class="nx">the</span> <span class="nx">following</span><span class="o">:</span>
+</span></code></pre></td></tr></table></div></figure> javascript
 var first, second;</p>
 
 <p>[first=6, second=7] = [1];
 console.log(first); // 1
-console.log(second); // 7
-```</p>
+console.log(second); // 7</p>
 
-<h3>Object destructuring</h3>
+<pre><code>
+###Object destructuring
+Just like with the examples of arrays above, we can use destructuring assignment on objects too, assigning specific object properties as values to the newly declared variables. Take the following example, where the `outfit()` function returns an object:
+</code></pre>
 
-<p>Just like with the examples of arrays above, we can use destructuring assignment on objects too, assigning specific object properties as values to the newly declared variables. Take the following example, where the <code>outfit()</code> function returns an object.
-```javascript
-function outfit(){
+<p>function outfit(){
   return {pants: &ldquo;blue&rdquo;, shirt: &ldquo;red&rdquo;, hat: &ldquo;yello&rdquo;};
 }</p>
 
-<p>var {pants} = outfit(); // pants = &ldquo;blue&rdquo;
-<code>
+<p>var {pants} = outfit(); // pants = &ldquo;blue&rdquo;</p>
+
+<pre><code>
 As was the case with elements of arrays, we use destructuring assignment to assign a specific property of an object as the variable's value - in this case, picking out the `pants` propety so the newly declared variable has a value of the string of 'blue'. We can also use this assign properties to variables with different names, using the following syntax:
-</code>javascript
-function outfit(){
+</code></pre>
+
+<p>function outfit(){
   return {pants: &ldquo;blue&rdquo;, shirt: &ldquo;red&rdquo;, hat: &ldquo;yello&rdquo;};
 }</p>
 
@@ -275,54 +334,101 @@ Here, the new</code>trousers<code>variable has the same value as the</code>pants
 <h3>Back to the initial example</h3>
 
 <p>Okay, so now that we understand destructuring assignment a little better, let&rsquo;s look at that original bit of code from the blog above:
-```javascript
-import Ember from &lsquo;ember&rsquo;;</p>
-
-<p>var { set } = Ember;
-<code>
-So, clearly we're looking for a property called 'set' that exists in the variable `Ember`. If you recall from above, the first line of code created the variable `Ember`, which is an object whose properties are the set of functions comprising the Ember.js library. Looking into the Ember.js library, we find a place where a `set` function is defined, and above it the following note:
-</code>javascript</p>
-
-<p>  /**
-    Sets the value of a property on an object, respecting computed properties
-    and notifying observers and other listeners of the change. If the
-    property is not defined but the object implements the <code>setUnknownProperty</code>
-    method then that will be invoked as well.</p>
-
-<pre><code>...
-</code></pre>
-
-<p>  */
-<code>``
- By using destructuring assignment, we assigned the</code>set<code>variable the value of the</code>set<code>function property from this object, which (we can see from the description) lets us change the values on an object in a way that will trigger any observers, listeners, or computed properties, meaning that changes will be reflected in the view. So, basically it's equivalent of calling</code>Ember.set()`.</p>
-
-<p>Why do this? Afterall, it&rsquo;s not much more effort to simply invoke the function with <code>Ember.set()</code>. There are a couple of reasons to use destructuring assignment in general, but in this case I think the answer lies in ensuring the code is resilient. Take a look at the rest of the code from the controller:
-```javascript
-export default Ember.Component.extend({
-classNames        : [ &lsquo;draggableDropzone&rsquo; ],
-classNameBindings : [ &lsquo;dragClass&rsquo; ],
-dragClass         : &lsquo;deactivated&rsquo;,</p>
-
-<p>dragLeave(event) {
-  event.preventDefault();
-  set(this, &lsquo;dragClass&rsquo;, &lsquo;deactivated&rsquo;);
-},</p>
-
-<p>dragOver(event) {
-  event.preventDefault();
-  set(this, &lsquo;dragClass&rsquo;, &lsquo;activated&rsquo;);
-},</p>
-
-<p>drop(event) {
-  var data = event.dataTransfer.getData(&lsquo;text/data&rsquo;);
-  this.sendAction(&lsquo;dropped&rsquo;, data);</p>
-
-<p>  set(this, &lsquo;dragClass&rsquo;, &lsquo;deactivated&rsquo;);
-}
-});
-<code>
-As you can see, `set` is called in three different locations. If the `set` function in the Ember.js library were renamed or deprecated at any point, then code in this example might break. If we were calling `Ember.set()` instead of using destructuring assignments and then calling `set()` each time, we would then have to fix each instance of `Ember.set()`. As it stands, we would only have to change the initial variable assignment. Let's say the `set` function in the Ember.js library was renamed `assign`, we could simply change things to:
-</code>javascript
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">import</span> <span class="nx">Ember</span> <span class="nx">from</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">ember</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;;</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kd">var</span> <span class="p">{</span> <span class="nx">set</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Ember</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="err">``</span>
+</span><span class='line'><span class="nx">So</span><span class="p">,</span> <span class="nx">clearly</span> <span class="nx">we</span><span class="s1">&#39;re looking for a property called &#39;</span><span class="nx">set</span><span class="s1">&#39; that exists in the variable&lt;/code&gt;Ember&lt;code&gt;. If you recall from above, the first line of code created the variable&lt;/code&gt;Ember&lt;code&gt;, which is an object whose properties are the set of functions comprising the Ember.js library. Looking into the Ember.js library, we find a place where a&lt;/code&gt;set` function is defined, and above it the following note:&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;</span>
+</span><span class='line'><span class="s1">  /**</span>
+</span><span class='line'><span class="s1">    Sets the value of a property on an object, respecting computed properties</span>
+</span><span class='line'><span class="s1">    and notifying observers and other listeners of the change. If the</span>
+</span><span class='line'><span class="s1">    property is not defined but the object implements the `setUnknownProperty`</span>
+</span><span class='line'><span class="s1">    method then that will be invoked as well.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">    ...</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">  */</span>
+</span><span class='line'><span class="s1">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt; By using destructuring assignment, we assigned the &lt;code&gt;set&lt;/code&gt; variable the value of the &lt;code&gt;set&lt;/code&gt; function property from this object, which (we can see from the description) lets us change the values on an object in a way that will trigger any observers, listeners, or computed properties, meaning that changes will be reflected in the view. So, basically it&amp;rsquo;s equivalent of calling &lt;code&gt;Ember.set()&lt;/code&gt;.&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt;Why do this? Afterall, it&amp;rsquo;s not much more effort to simply invoke the function with &lt;code&gt;Ember.set()&lt;/code&gt;. There are a couple of reasons to use destructuring assignment in general, but in this case I think the answer lies in ensuring the code is resilient. Take a look at the rest of the code from the controller:&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;export default Ember.Component.extend({</span>
+</span><span class='line'><span class="s1">classNames        : [ &#39;</span><span class="nx">draggableDropzone</span><span class="s1">&#39; ],</span>
+</span><span class='line'><span class="s1">classNameBindings : [ &#39;</span><span class="nx">dragClass</span><span class="s1">&#39; ],</span>
+</span><span class='line'><span class="s1">dragClass         : &#39;</span><span class="nx">deactivated</span><span class="s1">&#39;,</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">dragLeave(event) {</span>
+</span><span class='line'><span class="s1">  event.preventDefault();</span>
+</span><span class='line'><span class="s1">  set(this, &#39;</span><span class="nx">dragClass</span><span class="s1">&#39;, &#39;</span><span class="nx">deactivated</span><span class="s1">&#39;);</span>
+</span><span class='line'><span class="s1">},</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">dragOver(event) {</span>
+</span><span class='line'><span class="s1">  event.preventDefault();</span>
+</span><span class='line'><span class="s1">  set(this, &#39;</span><span class="nx">dragClass</span><span class="s1">&#39;, &#39;</span><span class="nx">activated</span><span class="s1">&#39;);</span>
+</span><span class='line'><span class="s1">},</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">drop(event) {</span>
+</span><span class='line'><span class="s1">  var data = event.dataTransfer.getData(&#39;</span><span class="nx">text</span><span class="o">/</span><span class="nx">data</span><span class="s1">&#39;);</span>
+</span><span class='line'><span class="s1">  this.sendAction(&#39;</span><span class="nx">dropped</span><span class="s1">&#39;, data);</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">  set(this, &#39;</span><span class="nx">dragClass</span><span class="s1">&#39;, &#39;</span><span class="nx">deactivated</span><span class="err">&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">As</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">see</span><span class="p">,</span> <span class="o">&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">set</span><span class="o">&lt;</span><span class="err">/code&gt; is called in three different locations. If the &lt;code&gt;set&lt;/code&gt; function in the Ember.js library were renamed or deprecated at any point, then code in this example might break. If we were calling &lt;code&gt;Ember.set()&lt;/code&gt; instead of using destructuring assignments and then calling &lt;code&gt;set()&lt;/code&gt; each time, we would then have to fix each instance of &lt;code&gt;Ember.set()&lt;/code&gt;. As it stands, we would only have to change the initial variable assignment. Let&amp;rsquo;s say the &lt;code&gt;set&lt;/code&gt; function in the Ember.js library was renamed &lt;code&gt;assign&lt;/code&gt;, we could simply change things to:</span>
+</span></code></pre></td></tr></table></div></figure> javascript
 import Ember from &lsquo;ember&rsquo;;</p>
 
 <p>var { assign: set } = Ember;
@@ -483,9 +589,9 @@ export default Ember.Route.extend({
 
 <p>For the moment, we don&rsquo;t need to add anything new to our controller, but we do need to fill out the <code>app/templates/people.hbs</code> template a bit. To make our front-end styling a little simpler, I&rsquo;m using the <a href="http://foundation.zurb.com/">Zurb Foundation</a> responsive framework. Don&rsquo;t worry if you don&rsquo;t understand how it works. I installed into my Ember app using the <a href="https://github.com/nadavshatz/ember-cli-foundation-sass">Ember Cli Foundation Sass addon</a>.</p>
 
-<p>In the template, I build a table of all the people in our database using the <code>{ {#each model as |person|} }</code> helper. It looks like this (ignore the spaces between the curly braces):</p>
+<p>In the template, I build a table of all the people in our database using the <code>#each model as</code> helper. It looks like this (ignore the spaces between the curly braces):</p>
 
-<p>```</p>
+<p></p>
 
 <table>
   <thead>
@@ -513,8 +619,9 @@ export default Ember.Route.extend({
 </table>
 
 
-<p><code>``
-If we navigate to</code><a href="http://localhost:4200/people">http://localhost:4200/people</a>` we can see our table rendered with the people in our database! That&rsquo;s great. Though, with 400 entries in the database, it involves a LOT of scrolling:</p>
+<p></p>
+
+<p>If we navigate to <code>http://localhost:4200/people</code> we can see our table rendered with the people in our database! That&rsquo;s great. Though, with 400 entries in the database, it involves a LOT of scrolling:</p>
 
 <div style='position:relative;padding-bottom:calc(100% / 1.60)'><iframe src='https://gfycat.com/ifr/TiredHeavyAidi' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
 

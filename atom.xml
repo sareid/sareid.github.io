@@ -4,7 +4,7 @@
   <title><![CDATA[andrew does his best]]></title>
   <link href="http://sareid.github.io/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-09-05T00:01:43-04:00</updated>
+  <updated>2016-09-14T23:08:54-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What is XHTML?]]></title>
+    <link href="http://sareid.github.io/blog/2016/09/14/what-is-xhtml/"/>
+    <updated>2016-09-14T20:29:07-04:00</updated>
+    <id>http://sareid.github.io/blog/2016/09/14/what-is-xhtml</id>
+    <content type="html"><![CDATA[<p>In a recent conversation, I was asked if I knew what XHTML was. Much to my dismay, I did not. I mean, I could make some guesses (and did): the HTML part was pretty clear, and scrabbling together context clues I correctly inferred that the &lsquo;X&rsquo; stood for <a href="https://en.wikipedia.org/wiki/Extensibility">extensible</a>. But as to what XHTML was and how it differed from HTML or XML, I didn&rsquo;t know.</p>
+
+<p>So, on that note, today we&rsquo;re going to learn about XHTML.<!--more--></p>
+
+<h3>The Basics: XML</h3>
+
+<p>In short, XHTML is HTML written in XML. At this point, I&rsquo;m assuming you&rsquo;re familiar with HTML, which is often the first thing we ever learn in web development - but that might not be the case with XML, or &lsquo;Extensible Markup Language&rsquo;. XML is a markup language designed for storing and transporting data - it&rsquo;s similar in appearance to HTML, but whereas the tags in HTML provide information about how documents should be displayed in the browser, the tags in XML allow you to describe the nature of the data being conveyed. HTML&rsquo;s tags are pre-defined, while in XML you can create your own tags. Here&rsquo;s some sample XML:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</span><span class='line'>&lt;food&gt;
+</span><span class='line'>  &lt;name&gt;Cheddar&lt;/name&gt;
+</span><span class='line'>  &lt;type&gt;Cheese&lt;/type&gt;
+</span><span class='line'>  &lt;flavour&gt;Sharp, pungent and slightly earthy.&lt;/flavour&gt;
+</span><span class='line'>&lt;/food&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, the XML tags provide information about the nature of the data - the <code>&lt;food&gt;</code> tag id descriptive, as are the properties we have given it through the <code>&lt;name&gt;</code>, <code>&lt;type&gt;</code>, and <code>&lt;flavour&gt;</code> tags. This XML code does not do anything in and of itself. Another piece of software is needed to do something with it. XML is extensible because new data can be added and removed, and programs will typically still function. For example, we could add a <code>&lt;nationality&gt;</code> tag to the example above and it would still work.</p>
+
+<h3>XML vs HTML Syntax</h3>
+
+<p>Several characteristics of XML differ from HTML and become important when we look at XHTML. Firstly, XML is case sensitive, while HTML is case insensitive. Secondly,  all XTML tags must be closed. In HTML, sometimes code will still function with out a closing tag, like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;body&gt;
+</span><span class='line'>  &lt;h1&gt;Hello world!&lt;/h1&gt;
+</span><span class='line'>  &lt;p&gt;This is a simple piece of code
+</span><span class='line'>&lt;/body&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In XML, an unclosed tag is illegal and will produce an error. Similarly, XML tags must be properly nested. That is to say, tags must be opened and closed in order, and cannot overlap. This is not the case in HTML, where the following may still function as intended:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;div&gt;
+</span><span class='line'>  &lt;p&gt;Here is some sample text.
+</span><span class='line'>&lt;/div&gt;&lt;/p&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, generally speaking, the rules of syntax for XML are stricter than they are for HTML, and certain suboptimal practices that will escape unpunished in HTML will produce errors in XML. This strictness played a role in the rationale for developing XHTML.</p>
+
+<h3>The History of XHTML</h3>
+
+<p>In 1998, the World Wide Web Consortium (W3C), the main international organisation responsible for setting standards for the internet, published a document entitled <a href="https://www.w3.org/TR/1998/WD-html-in-xml-19981205/">&lsquo;Reformulating HTML in XML&rsquo;</a>. The document outlined a rationale for reformulating HTML4 as an XML application. First, as new methods of browsing the Internet were being introduced, the shift to XML was intended to increase user agent interoperability, with the ultimate goal being that XHTML would be able to be used by a broader range of agents than HTML. Secondly, the extensibility of XML would allow for the easier introduction of new elements and element attributes through XHTML modules, meaning that it would be relatively easy to introduce ways of expressing new ideas through markup.</p>
+
+<p>XHTML was also introduced in an attempt to promote &lsquo;well-formed&rsquo; code. Since, as described above, browswers are generally lenient regarding certain syntax errors in HTML, websites often contained numerous errors. The W3C viewed this as problematic - and by introducing HTML written in XML, whose syntatic rules were stricter, web developers would be forced to abide by these rules or have their website produce an error message in the browser.</p>
+
+<p>It would appear that the reaction to XHTML was less than enthusiastic - in part because so many web pages contained errors that the prospect of rewriting in XHTML (which provided little in the way of additional features over HTML4) was not very appealing. In fact, loopholes in the XHTML 1.0 specification meant that text that looked like XHTML could still be served as the text/html MIME type and avoid the stricter error handling.</p>
+
+<p>Meanwhile, in the early 2000s, a competing vision for an evolved version of the HTML4 standard began to emerge amongst actors like Mozilla and Opera, and was articulated by the Web Hypertext Applications Technology Working Group (WHAT Working Group). This vision aimed to develop specifications based on HTML that would expand HTML&rsquo;s functionality, ease the deployment of interoperable web applications, and (and this is key) not break backwards compatibility.</p>
+
+<p>In 2014, this vision was formally released as a stable W3C recommendation as HTML5, and its widespread adoption has hindered any further progress in the adoption of XHTML. Indeed, in 2009, the W3C shut down the XHTML 2.0 Working Group.</p>
+
+<h3>Conclusion</h3>
+
+<p>With the rise of HTML5, it would seem that XHTML will recede into the annals of internet history as a mere footnote. It is, however, fun to note that to this day it is still easy to find developers defending its use (as well as other developers decrying it). This Quora post, asking <a href="https://www.quora.com/Why-do-developers-still-use-XHTML/answer/Chris-Minnick-1">&lsquo;Why do developers still use XHTML?&rsquo;</a> is a fascinating read - though most of the argument in favour of XHTML is that it forces you to code with discipline.</p>
+
+<p>There you have it - a quick trip down the Internet&rsquo;s memory lane, sparked by a simple reference in a conversation.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[5 Cool Ember Functions]]></title>
@@ -301,6 +379,8 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>The method waits for both the promises (in this case queries to the database) to be fulfilled, and then returns an object with two keys: <code>firstModel</code> and <code>secondModel</code>, whose values correspond to the data retrieved from the database.</p>
+
 <h2>Conclusions</h2>
 
 <p>That&rsquo;s just a taste of some of the interesting methods I&rsquo;ve come across in Ember so far. As mentioned at the start of this post, I&rsquo;m going to create a followup showing five more interesting methods, so stay tuned!</p>
@@ -374,7 +454,7 @@
 
 <h3>Object destructuring</h3>
 
-<p>Just like with the examples of arrays above, we can use destructuring assignment on objects too, assigning specific object properties as values to the newly declared variables. Take the following example, where the <code>outfit()</code> function returns an object.</p>
+<p>Just like with the examples of arrays above, we can use destructuring assignment on objects too, assigning specific object properties as values to the newly declared variables. Take the following example, where the <code>outfit()</code> function returns an object:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -752,57 +832,32 @@
 
 <p>For the moment, we don&rsquo;t need to add anything new to our controller, but we do need to fill out the <code>app/templates/people.hbs</code> template a bit. To make our front-end styling a little simpler, I&rsquo;m using the <a href="http://foundation.zurb.com/">Zurb Foundation</a> responsive framework. Don&rsquo;t worry if you don&rsquo;t understand how it works. I installed into my Ember app using the <a href="https://github.com/nadavshatz/ember-cli-foundation-sass">Ember Cli Foundation Sass addon</a>.</p>
 
-<p>In the template, I build a table of all the people in our database using the <code>{ {#each model as |person|} }</code> helper. It looks like this (ignore the spaces between the curly braces):</p>
+<p>In the template, I build a table of all the people in our database using the <code>#each model as</code> helper. It looks like this (ignore the spaces between the curly braces):</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">thead</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">First</span> <span class="nx">Name</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Last</span> <span class="nx">Name</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Nickname</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Age</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Email</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Phone</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span><span class="nx">Friends</span> <span class="nx">Since</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/thead&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">tbody</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="p">{</span> <span class="p">{</span><span class="err">#</span><span class="nx">each</span> <span class="nx">model</span> <span class="nx">as</span> <span class="o">|</span><span class="nx">person</span><span class="o">|</span><span class="p">}</span> <span class="p">}</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">first_name</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">last_name</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">nick_name</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">email</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">phone</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">td</span><span class="o">&gt;</span><span class="p">{</span> <span class="p">{</span><span class="nx">person</span><span class="p">.</span><span class="nx">friends_since</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="err">/tr&gt;</span>
-</span><span class='line'>    <span class="p"></span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/tbody&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/table&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<table>
+  <thead>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Nickname</th>
+    <th>Age</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Friends Since</th>
+  </thead>
+  <tbody>
+    { {#each model as |person|} }
+    <tr>
+      <td>{ {person.first_name} }</td>
+      <td>{ {person.last_name} }</td>
+      <td>{ {person.nick_name} }</td>
+      <td>{ {person.age} }</td>
+      <td>{ {person.email} }</td>
+      <td>{ {person.phone} }</td>
+      <td>{ {person.friends_since} }</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
 
 
 <p>If we navigate to <code>http://localhost:4200/people</code> we can see our table rendered with the people in our database! That&rsquo;s great. Though, with 400 entries in the database, it involves a LOT of scrolling:</p>
@@ -1097,7 +1152,9 @@
 
 <p>However, as the Rails Asset Pipeline pre-compiles all your JavaScript and CoffeeScript files into a minified Application.js file, a Document Ready function will fire when any page in your app loads. One solution would have been to create a separate <code>carrier.js</code> file and include it manually in the Carrier show view like so:</p>
 
-<p><code>&lt;%= javascript_include_tag "carrier" %&gt;</code></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;%= javascript_include_tag "carrier" %&gt;</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This would require a separate JS file to be loaded alongside the <code>application.js</code> file, and for me to add specific instructions to the <code>production.rb</code> file. This is okay, but it seemed like there should be a more elegant solution.</p>
 
@@ -1276,11 +1333,20 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Bootstrap: Making front-end development easier since 1842 (note to self: check dates)]]></title>
+    <title type="html"><![CDATA[Rails And Bootstrap Like Romeo And Juliet With Less Murder]]></title>
     <link href="http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder/"/>
-    <updated>2016-01-12T07:41:35-05:00</updated>
+    <updated>2016-01-12T00:00:00-05:00</updated>
     <id>http://sareid.github.io/blog/2016/01/12/rails-and-bootstrap-like-romeo-and-juliet-with-less-murder</id>
-    <content type="html"><![CDATA[<h3>Front-end frameworks</h3>
+    <content type="html"><![CDATA[<hr />
+
+<p>layout: post
+title: &ldquo;Bootstrap: Making front-end development easier since 1842 (note to self: check dates)&rdquo;
+date: 2016-01-12 07:41:35 -0500
+comments: true</p>
+
+<h2>categories: &ldquo;Flatiron&nbsp;School Front-End&rdquo;</h2>
+
+<h3>Front-end frameworks</h3>
 
 <p>Throughout the first six weeks I&rsquo;ve spent in the Flatiron School&rsquo;s Web Development immersive course, we&rsquo;ve largely stuck to the dark and bewildering world of the back-end, wading waist deep into the nitty-gritty muck and grime of SQL databases and Model View Controller designs. There&rsquo;s been a lot of plain code on plain screens.</p>
 
@@ -1387,7 +1453,7 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">// app/assets/javascripts/application.js</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// app/assets/javascripts/application.js</span>
 </span><span class='line'>
 </span><span class='line'><span class="p">...</span>
 </span><span class='line'>

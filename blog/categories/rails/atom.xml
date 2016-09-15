@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rails | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-09-14T17:20:22-04:00</updated>
+  <updated>2016-09-14T23:08:54-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -27,15 +27,18 @@
 <p>To render these maps, I was using the <a href="https://d3js.org/">D3 JavaScript library</a>. I needed to trigger two AJAX requests to my Carrier controller for two TopoJSON files (one for the US map, and one for the metropolitan areas). The latter of these two TopoJSON files was dynamically built in the <code>carriers#data</code> controller action and was unique to each instance of the Carrier model. I wanted these AJAX functions to fire as soon as the show page was loaded.</p>
 
 <p>The typical way to trigger a JavaScript function upon page load would be via a Document Ready function, which fires once the DOM is loaded, as such:
-{% codeblock lang:javascript %}
-$( document ).ready(function() {
-    // Code goes here
-});
-{% endcodeblock %}</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span> <span class="nb">document</span> <span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Code goes here</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>However, as the Rails Asset Pipeline pre-compiles all your JavaScript and CoffeeScript files into a minified Application.js file, a Document Ready function will fire when any page in your app loads. One solution would have been to create a separate <code>carrier.js</code> file and include it manually in the Carrier show view like so:</p>
 
-<p><code>&lt;%= javascript_include_tag "carrier" %&gt;</code></p>
+<pre><code>&lt;%= javascript_include_tag "carrier" %&gt;
+</code></pre>
 
 <p>This would require a separate JS file to be loaded alongside the <code>application.js</code> file, and for me to add specific instructions to the <code>production.rb</code> file. This is okay, but it seemed like there should be a more elegant solution.</p>
 
@@ -43,38 +46,57 @@ $( document ).ready(function() {
 
 <p>Indeed, a more elegant solution exists: the <a href="https://github.com/Verba/jquery-readyselector">jQuery ReadySelector plugin</a>. This plugin extends the <code>.ready()</code> function for when a specific element of the DOM is loaded. In Rails, the suggested option is to dynamically generate class names for the <code>&lt;body&gt;</code> tags of your view matching the current controller action being used. Using ERB tags, you can achieve this with the following code:</p>
 
-<p>{% codeblock lang:html %}
-<body class="<%= controller_name -%> &lt;%= action_name -%>&ldquo;>
-{% endcodeblock %}</p>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">&quot;&lt;%=</span> <span class="na">controller_name</span> <span class="na">-</span><span class="err">%</span><span class="nt">&gt;</span> <span class="ni">&amp;lt;</span>%= action_name -%&gt;<span class="ni">&amp;ldquo;</span>&gt;
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>With this in place, all of my Carrier show pages were rendered inside of <code>&lt;body class="carriers show"&gt;</code> tags. In my <code>carriers.js</code> file, I included the following code that would trigger the relevant AJAX requests whenever a carrier show page was loaded:</p>
 
-<p>{% codeblock lang:javascript %}
-$(&lsquo;.carriers.show&rsquo;).ready(function() {
-  $.ajax({
-    type: &ldquo;GET&rdquo;,
-    contentType: &ldquo;application/json; charset=utf-8&rdquo;,
-    url: &lsquo;data&rsquo;,
-    data: {&lsquo;id&rsquo;: $(&lsquo;#metro-map&rsquo;).data(&lsquo;params-id&rsquo;)},
-    dataType: &lsquo;json&rsquo;,
-    success: function (data) {
-      $.getJSON(&lsquo;usData&rsquo;, function(usData){
-        draw(usData, data);
-      })
-    },
-      error: function (result) {
-      error();
-    }
-  });
-})
-{% endcodeblock %}</p>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;.</span><span class="nx">carriers</span><span class="p">.</span><span class="nx">show</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">type</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">GET</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
+</span><span class='line'>    <span class="nx">contentType</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">application</span><span class="o">/</span><span class="nx">json</span><span class="p">;</span> <span class="nx">charset</span><span class="o">=</span><span class="nx">utf</span><span class="o">-</span><span class="mi">8</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span>
+</span><span class='line'>    <span class="nx">url</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">data</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span>
+</span><span class='line'>    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">id</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="err">#</span><span class="nx">metro</span><span class="o">-</span><span class="nx">map</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;).</span><span class="nx">data</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">params</span><span class="o">-</span><span class="nx">id</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)},</span>
+</span><span class='line'>    <span class="nx">dataType</span><span class="o">:</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">json</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span>
+</span><span class='line'>    <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">usData</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">usData</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">draw</span><span class="p">(</span><span class="nx">usData</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">})</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>      <span class="nx">error</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">error</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>A few notes to explain what is happening. This function makes an AJAX request to the <code>#data</code> action in the Carrier controller, which serves back a topoJSON file. You&rsquo;ll note it uses the &lsquo;data&rsquo; field to pass the ID of the specific carrier to controller. I did this by using ERB tags to generate a custom data attribute in the <code>&lt;div&gt;</code> tag of the column I was appending the D3 map too. The value of this attribute corresponded to the ID of the carrier in question. The code for that looked like this:</p>
 
-<p>{% codeblock lang:html %}</p>
-
-<p><div class="col-lg-12 text-center" id="metro-map" <%= "data-params-id=#{params[:id]}" if params.has_key?(:id) %>>
-{% endcodeblock %}</p>
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;col-lg-12 text-center&quot;</span> <span class="na">id=</span><span class="s">&quot;metro-map&quot;</span> <span class="err">&lt;%=</span> <span class="err">&quot;</span><span class="na">data-params-id=</span><span class="s">#{params[:id]}&quot;</span> <span class="na">if</span> <span class="na">params</span><span class="err">.</span><span class="na">has_key</span><span class="err">?(</span><span class="na">:id</span><span class="err">)</span> <span class="err">%</span><span class="nt">&gt;</span>&gt;
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>The AJAX request uses the <code>.data()</code> function to pass the ID to the controller, which is able to query the database for the carrier in question, and then serve back the needed topoJSON. Upon a successful AJAX request, a second AJAX request is fired to the Carrier controller, this time serving back a static JSON with the information needed to render the map of the USA. The rest of the JavaScript code for rendering the D3 map can be <a href="https://github.com/sareid/carrier-selector/blob/master/app/assets/javascripts/carriers.js.erb">seen here</a>.</p>
 
@@ -107,9 +129,7 @@ $(&lsquo;.carriers.show&rsquo;).ready(function() {
 
 <p>So, what do Turbolinks do? From the source:</p>
 
-<p>{% blockquote ReadMe <a href="https://github.com/rails/turbolinks">https://github.com/rails/turbolinks</a> Turbolinks on Github %}
-Turbolinks makes following links in your web application faster. Instead of letting the browser recompile the JavaScript and CSS between each page change, it keeps the current page instance alive and replaces only the body (or parts of) and the title in the head.
-{% endblockquote %}</p>
+<p><blockquote><p>Turbolinks makes following links in your web application faster. Instead of letting the browser recompile the JavaScript and CSS between each page change, it keeps the current page instance alive and replaces only the body (or parts of) and the title in the head.</p><footer><strong>ReadMe <a href="https://github.com/rails/turbolinks">https://github.com/rails/turbolinks</a> Turbolinks on Github</strong></footer></blockquote></p>
 
 <p>That&rsquo;s rad, right? I want to make my links faster! And thats great that I don&rsquo;t need to redownload my CSS and JS resources each time I click a link. It seems to me like that would be great for the user experience, especially on mobile devices.</p>
 
