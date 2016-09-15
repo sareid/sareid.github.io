@@ -4,7 +4,7 @@
   <title><![CDATA[Category: front-end | andrew does his best]]></title>
   <link href="http://sareid.github.io/blog/categories/front-end/atom.xml" rel="self"/>
   <link href="http://sareid.github.io/"/>
-  <updated>2016-09-14T23:08:54-04:00</updated>
+  <updated>2016-09-15T01:05:26-04:00</updated>
   <id>http://sareid.github.io/</id>
   <author>
     <name><![CDATA[Andrew Reid]]></name>
@@ -34,7 +34,7 @@
 &lt;/food&gt;
 </code></pre>
 
-<p>As you can see, the XML tags provide information about the nature of the data - the <code>&lt;food&gt;</code> tag id descriptive, as are the properties we have given it through the <code>&lt;name&gt;</code>, <code>&lt;type&gt;</code>, and <code>&lt;flavour&gt;</code> tags. This XML code does not do anything in and of itself. Another piece of software is needed to do something with it. XML is extensible because new data can be added and removed, and programs will typically still function. For example, we could add a <code>&lt;nationality&gt;</code> tag to the example above and it would still work.</p>
+<p>As you can see, the XML tags provide information about the nature of the data - the <code>&lt;food&gt;</code> tag is descriptive (in this case serving to name an object), as are the properties we have given it through the <code>&lt;name&gt;</code>, <code>&lt;type&gt;</code>, and <code>&lt;flavour&gt;</code> tags. This XML code does not do anything in and of itself. Another piece of software is needed to do something with it. XML is extensible because new data can be added and removed, and programs will typically still function. For example, we could add a <code>&lt;nationality&gt;</code> tag to the example above and it would still work.</p>
 
 <h3>XML vs HTML Syntax</h3>
 
